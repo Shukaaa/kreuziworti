@@ -11,7 +11,7 @@
         <h4>Horizontal</h4>
         <div class="word-hints" *ngFor="let word of puzzleData.horizontal; index as i">
           <div class="word-hint">
-            <span class="word-id">h{{ i + 1 }}</span>
+            <span class="word-id">H{{ i + 1 }}</span>
             <span class="word-description">{{ word.description }}</span>
           </div>
         </div>
@@ -19,7 +19,7 @@
         <h4>Vertikal</h4>
         <div class="word-hints" *ngFor="let word of puzzleData.vertical; index as i">
           <div class="word-hint">
-            <span class="word-id">v{{ i + 1 }}</span>
+            <span class="word-id">V{{ i + 1 }}</span>
             <span class="word-description">{{ word.description }}</span>
           </div>
         </div>
@@ -56,4 +56,5 @@
     </div>
   </section>
   <div class="divider"></div>
+  Go back to <a [routerLink]="['/']">Home</a>
 </ng-container>

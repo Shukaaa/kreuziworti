@@ -44,7 +44,6 @@ a {
 }
 
 button {
-  // RETRO PIXEL BUTTON
   font-family: 'Press Start 2P', cursive;
   font-size: 1em;
   padding: 0.5em 1em;
@@ -54,6 +53,16 @@ button {
   cursor: pointer;
   transition: background 0.3s, color 0.3s;
 
+  &.done {
+    background: $done;
+    color: $dark;
+  }
+
+  &.in-progress {
+    background: $in-progress;
+    color: $dark;
+  }
+
   &:hover {
     background: $light;
     color: $dark;
@@ -62,4 +71,11 @@ button {
   &:focus {
     outline: none;
   }
+}
+
+blockquote {
+  font-size: 0.8em;
+  font-style: italic;
+  text-align: center;
+  margin: 1em 0;
 }

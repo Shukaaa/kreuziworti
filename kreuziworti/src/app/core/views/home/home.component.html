@@ -2,6 +2,14 @@
   <h1>Kreuziworti Kreuzwort Spiel</h1>
   <img class="hamsti" src="assets/hamsti.webp">
 </div>
+<blockquote>
+  ➡ Ä, Ö und Ü sind erlaubt! Nutze <u>KEIN</u> AE, OE oder UE!
+</blockquote>
+<nav>
+  <a routerLink="/theme">Theme anpassen</a>
+  <div class="break">|</div>
+  <a routerLink="/settings">Einstellungen</a>
+</nav>
 <div class="divider"></div>
 <div class="puzzle-selector">
   <ng-container *ngIf="categories.length === 0">
@@ -12,9 +20,9 @@
       <h3>{{ category.title }}</h3>
       <span>{{ category.description }}</span>
       <div class="puzzle">
-        <a class="cell" [routerLink]="['/puzzle', category.id, i+1]" *ngFor="let _ of category.puzzles; index as i">
+        <button [routerLink]="['/puzzle', category.id, i+1]" *ngFor="let _ of category.puzzles; index as i" [classList]="getButtonClassList(category.id, i+1)">
           {{ i+1 }}
-        </a>
+        </button>
       </div>
       <div class="divider"></div>
     </div>
