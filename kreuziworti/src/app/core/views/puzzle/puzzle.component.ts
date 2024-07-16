@@ -4,7 +4,7 @@ import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {CrosswordCategory, CrosswordPuzzle} from "../../types/crossword-data";
 import {NgForOf, NgIf} from "@angular/common";
 import {Coordinate} from "../../types/coordinate";
-import {GameProgressStore} from "../../stores/game-progress.store";
+import {LocalStorageStore} from "../../stores/local-storage.store";
 
 @Component({
   selector: 'app-puzzle',
@@ -28,7 +28,7 @@ export class PuzzleComponent implements OnInit {
   constructor(
     private packageStore: PackageStore,
     private route: ActivatedRoute,
-    private gameProgressStore: GameProgressStore,
+    private gameProgressStore: LocalStorageStore,
     private router: Router
   ) {
   }

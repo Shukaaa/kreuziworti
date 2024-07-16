@@ -1,0 +1,68 @@
+// Import the color module only once
+@use 'sass:color';
+
+$themes: (
+  old-os: (
+    dark: #2a4bac,
+    light: #8b73b5,
+    white: #fff,
+    done: #558f56,
+    in-progress: #d8a548
+  ),
+  hacker: (
+    dark: #000,
+    light: #0f0,
+    white: #0f0,
+    done: #11ff00,
+    in-progress: #ffcc00
+  ),
+  retro: (
+    dark: #ff0000,
+    light: #ffcc00,
+    white: #fff,
+    done: #00ff00,
+    in-progress: #ff00ff
+  ),
+  retro-lighter: (
+    dark: #ed5353,
+    light: #d5c070,
+    white: #fff,
+    done: #51d151,
+    in-progress: #d166d1
+  ),
+);
+
+$shades: (
+  10, 20, 30, 40, 50, 60, 70, 80, 90
+);
+
+@mixin createCssThemeVariables() {
+  @each $theme, $colors in $themes {
+    $dark: map-get($colors, dark);
+    $light: map-get($colors, light);
+    $white: map-get($colors, white);
+
+    $done: map-get($colors, done);
+    $in-progress: map-get($colors, in-progress);
+
+    .#{$theme} {
+      @each $shade in $shades {
+        --dark-darken-#{$shade}: #{color.adjust($dark, $lightness: -$shade * 1)};
+        --dark-lighten-#{$shade}: #{color.adjust($dark, $lightness: $shade * 1)};
+        --light-darken-#{$shade}: #{color.adjust($light, $lightness: -$shade * 1)};
+        --light-lighten-#{$shade}: #{color.adjust($light, $lightness: $shade * 1)};
+      }
+
+      --dark: #{$dark};
+      --light: #{$light};
+      --white: #{$white};
+
+      --done: #{$done};
+      --in-progress: #{$in-progress};
+    }
+  }
+}
+
+body {
+  @include createCssThemeVariables();
+}

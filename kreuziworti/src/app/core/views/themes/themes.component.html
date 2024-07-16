@@ -1,0 +1,15 @@
+<h1>Theme anpassen</h1>
+<nav>
+  <a routerLink="/">Startseite</a>
+  <div class="break">|</div>
+  <a routerLink="/settings">Einstellungen</a>
+</nav>
+<div class="divider"></div>
+<h2>Themes</h2>
+<div class="themes">
+  <div class="theme" *ngFor="let theme of themes">
+    <h4>{{ theme.title }} {{theme.id === getCurrentTheme() ? "(Ausgewählt)" : ""}}</h4>
+    <span class="description">{{ theme.description }}</span>
+    <button (click)="selectTheme(theme.id)">Auswählen</button>
+  </div>
+</div>
