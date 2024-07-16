@@ -1,0 +1,59 @@
+<ng-container *ngIf="!puzzleData">
+  Lädt Level...
+</ng-container>
+<ng-container *ngIf="puzzleData">
+  <h1>{{ categoryTitle }} {{ puzzleId }}</h1>
+  {{ getGameFieldSize().x + 'x' + getGameFieldSize().y + ' Felder' }}
+  <div class="divider"></div>
+  <section>
+    <div class="left">
+      <div class="word-hint-section">
+        <h4>Horizontal</h4>
+        <div class="word-hints" *ngFor="let word of puzzleData.horizontal; index as i">
+          <div class="word-hint">
+            <span class="word-id">h{{ i + 1 }}</span>
+            <span class="word-description">{{ word.description }}</span>
+          </div>
+        </div>
+        <br/>
+        <h4>Vertikal</h4>
+        <div class="word-hints" *ngFor="let word of puzzleData.vertical; index as i">
+          <div class="word-hint">
+            <span class="word-id">v{{ i + 1 }}</span>
+            <span class="word-description">{{ word.description }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div>
+        <h4>Lösungswort</h4>
+        <span class="final-word">{{finalWord}}</span>
+        <br/>
+        <button (click)="checkSolution()">Lösung prüfen</button>
+      </div>
+    </div>
+    <div class="game-field" [style.width.px]="getGameFieldSize().x * 75"
+         [style.height.px]="getGameFieldSize().y * 75">
+      <div class="row" *ngFor="let _ of getArray(getGameFieldSize().x); let x = index">
+        <div *ngFor="let __ of getArray(getGameFieldSize().y); let y = index"
+             [className]="getCellClass(x+1, y+1)"
+             (click)="selectField(x+1, y+1)"
+        >
+        <span class="letter-tag">
+          <ng-container *ngIf="isFieldSelected(x+1, y+1)">
+            ...
+          </ng-container>
+          <ng-container *ngIf="!isFieldSelected(x+1, y+1)">
+            {{ getWordStart(x + 1, y + 1) }}
+            {{ getFinalWordLetter(x + 1, y + 1) }}
+          </ng-container>
+        </span>
+          <span class="letter">
+          {{ getLetter(x + 1, y + 1) }}
+        </span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="divider"></div>
+</ng-container>

@@ -1,0 +1,59 @@
+{
+  "horizontal": [
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 1
+      },
+      "word": "Dübel",
+      "description": "Befestigung in der Wand"
+    },
+    {
+      "startPoint": {
+        "x": 2,
+        "y": 4
+      },
+      "word": "Allee",
+      "description": "Baumgesäumte Straße"
+    }
+  ],
+  "vertical": [
+    {
+      "startPoint": {
+        "x": 5,
+        "y": 1
+      },
+      "word": "Lederjacke",
+      "description": "Kleidung aus Tierhaut"
+    },
+    {
+      "startPoint": {
+        "x": 2,
+        "y": 3
+      },
+      "word": "Laufband",
+      "description": "Trainingsgerät zum Laufen"
+    }
+  ],
+  "finalWord": {
+    "word": "Rübe",
+    "letters": [
+      {
+        "word": "Lederjacke",
+        "letterPos": 5
+      },
+      {
+        "word": "Dübel",
+        "letterPos": 2
+      },
+      {
+        "word": "Laufband",
+        "letterPos": 5
+      },
+      {
+        "word": "Allee",
+        "letterPos": 4
+      }
+    ]
+  }
+}

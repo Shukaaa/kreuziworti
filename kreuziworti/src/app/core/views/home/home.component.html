@@ -1,0 +1,22 @@
+<div class="title">
+  <h1>Kreuziworti Kreuzwort Spiel</h1>
+  <img class="hamsti" src="assets/hamsti.webp">
+</div>
+<div class="divider"></div>
+<div class="puzzle-selector">
+  <ng-container *ngIf="categories.length === 0">
+    Lädt alle Level...
+  </ng-container>
+  <ng-container *ngIf="categories.length > 0">
+    <div class="category" *ngFor="let category of categories">
+      <h3>{{ category.title }}</h3>
+      <span>{{ category.description }}</span>
+      <div class="puzzle">
+        <a class="cell" [routerLink]="['/puzzle', category.id, i+1]" *ngFor="let _ of category.puzzles; index as i">
+          {{ i+1 }}
+        </a>
+      </div>
+      <div class="divider"></div>
+    </div>
+  </ng-container>
+</div>
