@@ -1,9 +1,4 @@
 <h1>Theme anpassen</h1>
-<nav>
-  <a routerLink="/">Startseite</a>
-  <div class="break">|</div>
-  <a routerLink="/settings">Einstellungen</a>
-</nav>
 <div class="divider"></div>
 <h2>Themes</h2>
 <div class="themes">
@@ -13,3 +8,5 @@
     <button (click)="selectTheme(theme.id)">Auswählen</button>
   </div>
 </div>
+<div class="divider"></div>
+Zurück zur <a [routerLink]="['/']">Startseite</a>
