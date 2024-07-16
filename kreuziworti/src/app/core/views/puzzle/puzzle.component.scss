@@ -3,7 +3,6 @@
 
   display: grid;
   width: fit-content;
-  height: fit-content;
   background-color: var(--dark);
   user-select: none;
 }
@@ -28,6 +27,10 @@
     background-color: var(--light);
     color: var(--dark);
 
+    &.placeholder {
+      color: var(--dark-lighten-10);
+    }
+
     &:hover:not(.selected) {
       background-color: var(--light-darken-10);
     }
@@ -49,6 +52,11 @@
 
 .letter {
   font-size: 1.5em;
+  text-transform: uppercase;
+
+  &.placeholder {
+    opacity: 0.25;
+  }
 }
 
 section {
@@ -64,6 +72,11 @@ section {
   align-items: center;
   margin: 0 1em;
   gap: 1em;
+
+  &.discovered {
+    text-decoration: line-through;
+    color: var(--light-lighten-10);
+  }
 }
 
 .word-id {

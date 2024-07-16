@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PackageStore} from "../../stores/package.store";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
-import {CrosswordCategory, CrosswordPuzzle} from "../../types/crossword-data";
+import {CrosswordCategory, CrosswordPuzzle, CrosswordWord} from "../../types/crossword-data";
 import {NgForOf, NgIf} from "@angular/common";
 import {Coordinate} from "../../types/coordinate";
 import {LocalStorageStore} from "../../stores/local-storage.store";
@@ -38,7 +38,7 @@ export class PuzzleComponent implements OnInit {
     const puzzleId = this.route.snapshot.params['puzzleId'];
     const category: CrosswordCategory = await this.packageStore.getPackagesByCategoryId(categoryId);
 
-    this.puzzleData = category.puzzles[parseInt(puzzleId)-1];
+    this.puzzleData = category.puzzles[parseInt(puzzleId) - 1];
     this.categoryTitle = category.title;
     this.puzzleId = puzzleId;
 
@@ -50,9 +50,9 @@ export class PuzzleComponent implements OnInit {
     if (puzzleProgress) {
       this.assignedLetters = puzzleProgress.assignedLetters;
     } else {
-      // initialize assignedLetters array with X
+      // initialize assignedLetters array with x
       const gameFieldSize = this.getGameFieldSize();
-      this.assignedLetters = this.getArray(gameFieldSize.y).map(() => this.getArray(gameFieldSize.x).map(() => "X"));
+      this.assignedLetters = this.getArray(gameFieldSize.y).map(() => this.getArray(gameFieldSize.x).map(() => "x"));
     }
 
     document.addEventListener('keydown', (event) => {
@@ -98,7 +98,7 @@ export class PuzzleComponent implements OnInit {
         puzzleProgress: []
       });
 
-      gameProgress.categoryProgress[gameProgress.categoryProgress.length-1].puzzleProgress.push({
+      gameProgress.categoryProgress[gameProgress.categoryProgress.length - 1].puzzleProgress.push({
         puzzleId,
         done: false,
         assignedLetters: this.assignedLetters
@@ -119,6 +119,30 @@ export class PuzzleComponent implements OnInit {
     }
 
     this.gameProgressStore.setGameProgress(gameProgress);
+  }
+
+  wordDiscovered(word: CrosswordWord, isHorizontal: boolean): boolean {
+    if (isHorizontal) {
+      for (let i = word.startPoint.x; i <= word.endPoint.x; i++) {
+        const assignedLetter = this.assignedLetters[word.startPoint.y - 1][i - 1].toUpperCase();
+        const wordLetter = word.word[i - word.startPoint.x].toUpperCase();
+        if (assignedLetter !== wordLetter) {
+          return false;
+        }
+      }
+    }
+
+    if (!isHorizontal) {
+      for (let i = word.startPoint.y; i <= word.endPoint.y; i++) {
+        const assignedLetter = this.assignedLetters[i - 1][word.startPoint.x - 1].toUpperCase();
+        const wordLetter = word.word[i - word.startPoint.y].toUpperCase();
+        if (assignedLetter !== wordLetter) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 
   getArray(size: number): number[] {
@@ -156,7 +180,7 @@ export class PuzzleComponent implements OnInit {
 
     if (horizontalIndex !== -1) {
       // @ts-ignore
-      return "H"+(horizontalIndex+1);
+      return "H" + (horizontalIndex + 1);
     }
 
     const verticalIndex = this.puzzleData?.vertical.findIndex(word => {
@@ -165,7 +189,7 @@ export class PuzzleComponent implements OnInit {
 
     if (verticalIndex !== -1) {
       // @ts-ignore
-      return "V"+(verticalIndex+1);
+      return "V" + (verticalIndex + 1);
     }
 
     return "";
@@ -180,19 +204,20 @@ export class PuzzleComponent implements OnInit {
       return location.x === x && location.y === y;
     });
 
-    return isFinalWorldLetter ? "L"+(index+1) : "";
+    return isFinalWorldLetter ? "L" + (index + 1) : "";
   }
 
   getLetter(x: number, y: number): string {
-    return this.assignedLetters[y-1][x-1];
+    return this.assignedLetters[y - 1][x - 1];
   }
 
   setLetter(x: number, y: number, letter: string) {
-    this.assignedLetters[y-1][x-1] = letter;
+    this.assignedLetters[y - 1][x - 1] = letter;
     this.saveProgress();
   }
 
   selectedField: Coordinate | null = null;
+
   recognizeLetter(letter: string) {
     if (this.selectedField !== null) {
       this.setLetter(this.selectedField.x, this.selectedField.y, letter);
@@ -239,11 +264,20 @@ export class PuzzleComponent implements OnInit {
       this.done = true;
       this.saveProgress();
       alert("YAAAY! Du hast es gerockt!");
-    } else {
-      this.done = false;
-      alert("Nahhh, das war leider nicht korrekt. Versuch es nochmal!");
+      this.router.navigate(['/home']).then(r => r);
+      return
     }
 
-    this.router.navigate(['/home']).then(r => r);
+    this.done = false;
+    alert("Nahhh, das war leider nicht korrekt. Versuch es nochmal!");
+  }
+
+  resetGameData() {
+    const feedback = confirm("Möchtest du wirklich das Rätsel zurücksetzen? :o");
+
+    if (feedback) {
+      this.assignedLetters = this.assignedLetters.map(row => row.map(() => "x"));
+      this.saveProgress();
+    }
   }
 }

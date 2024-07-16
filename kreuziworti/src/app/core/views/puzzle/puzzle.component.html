@@ -4,21 +4,24 @@
 <ng-container *ngIf="puzzleData">
   <h1>{{ categoryTitle }} {{ puzzleId }}</h1>
   {{ getGameFieldSize().x + 'x' + getGameFieldSize().y + ' Felder' }}
+  <blockquote>
+    ➡ H = Horizontal, V = Vertikal, L = Lösungswort
+  </blockquote>
   <div class="divider"></div>
   <section>
     <div class="left">
       <div class="word-hint-section">
-        <h4>Horizontal</h4>
+        <h3>Horizontal</h3>
         <div class="word-hints" *ngFor="let word of puzzleData.horizontal; index as i">
-          <div class="word-hint">
+          <div [classList]="wordDiscovered(word, true) ? 'word-hint discovered' : 'word-hint'">
             <span class="word-id">H{{ i + 1 }}</span>
             <span class="word-description">{{ word.description }}</span>
           </div>
         </div>
         <br/>
-        <h4>Vertikal</h4>
+        <h3>Vertikal</h3>
         <div class="word-hints" *ngFor="let word of puzzleData.vertical; index as i">
-          <div class="word-hint">
+          <div [classList]="wordDiscovered(word, false) ? 'word-hint discovered' : 'word-hint'">
             <span class="word-id">V{{ i + 1 }}</span>
             <span class="word-description">{{ word.description }}</span>
           </div>
@@ -26,33 +29,39 @@
       </div>
       <div class="divider"></div>
       <div>
-        <h4>Lösungswort</h4>
-        <span class="final-word">{{ finalWord }}</span>
+        <h3>Lösungswort</h3>
+        <span class="final-word">Lösung: {{ finalWord }}</span>
         <br/>
         <button (click)="checkSolution()">Lösung prüfen</button>
+      </div>
+      <div class="divider"></div>
+      <div>
+        <h3>Zurücksetzen</h3>
+        <button (click)="resetGameData()">Rätsel zurücksetzen</button>
       </div>
     </div>
     <div class="game-field"
          [style.grid-template-columns]="'repeat(' + getGameFieldSize().x + ', 1fr)'"
          [style.grid-template-rows]="'repeat(' + getGameFieldSize().y + ', 1fr)'"
+         [style.height]="getGameFieldSize().y * 75 + 'px'"
     >
       <div class="row" *ngFor="let _ of getArray(getGameFieldSize().x); let x = index">
         <div *ngFor="let __ of getArray(getGameFieldSize().y); let y = index"
              [className]="getCellClass(x+1, y+1)"
              (click)="selectField(x+1, y+1)"
         >
-        <span class="letter-tag">
-          <ng-container *ngIf="isFieldSelected(x+1, y+1)">
-            ...
-          </ng-container>
-          <ng-container *ngIf="!isFieldSelected(x+1, y+1)">
-            {{ getWordStart(x + 1, y + 1) }}
-            {{ getFinalWordLetter(x + 1, y + 1) }}
-          </ng-container>
-        </span>
-          <span class="letter">
-          {{ getLetter(x + 1, y + 1) }}
-        </span>
+          <span class="letter-tag">
+            <ng-container *ngIf="isFieldSelected(x+1, y+1)">
+              ...
+            </ng-container>
+            <ng-container *ngIf="!isFieldSelected(x+1, y+1)">
+              {{ getWordStart(x + 1, y + 1) }}
+              {{ getFinalWordLetter(x + 1, y + 1) }}
+            </ng-container>
+          </span>
+          <span class="letter" [classList]="getLetter(x + 1, y + 1) === 'x' ? 'letter placeholder' : 'letter'">
+            {{ getLetter(x + 1, y + 1) }}
+          </span>
         </div>
       </div>
     </div>

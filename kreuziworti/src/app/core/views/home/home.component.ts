@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
       return 'done'
     }
 
-    if (puzzleProgress.assignedLetters.some(row => row.some(letter => letter === 'X'))) {
+    if (puzzleProgress.assignedLetters.some(row => row.some(letter => letter === 'x'))) {
       return 'in-progress'
     }
 
