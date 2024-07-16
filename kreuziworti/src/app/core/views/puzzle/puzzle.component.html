@@ -27,13 +27,15 @@
       <div class="divider"></div>
       <div>
         <h4>Lösungswort</h4>
-        <span class="final-word">{{finalWord}}</span>
+        <span class="final-word">{{ finalWord }}</span>
         <br/>
         <button (click)="checkSolution()">Lösung prüfen</button>
       </div>
     </div>
-    <div class="game-field" [style.width.px]="getGameFieldSize().x * 75"
-         [style.height.px]="getGameFieldSize().y * 75">
+    <div class="game-field"
+         [style.grid-template-columns]="'repeat(' + getGameFieldSize().x + ', 1fr)'"
+         [style.grid-template-rows]="'repeat(' + getGameFieldSize().y + ', 1fr)'"
+    >
       <div class="row" *ngFor="let _ of getArray(getGameFieldSize().x); let x = index">
         <div *ngFor="let __ of getArray(getGameFieldSize().y); let y = index"
              [className]="getCellClass(x+1, y+1)"

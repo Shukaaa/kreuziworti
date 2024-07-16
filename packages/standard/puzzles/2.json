@@ -1,0 +1,147 @@
+{
+  "horizontal": [
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 3
+      },
+      "word": "Nordamerika",
+      "description": "Kontinent nördlich von Südamerika"
+    },
+    {
+      "startPoint": {
+        "x": 6,
+        "y": 5
+      },
+      "word": "Ufer",
+      "description": "Landstreifen am Wasser"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 5
+      },
+      "word": "Giga",
+      "description": "Milliardenfach"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 7
+      },
+      "word": "Elon",
+      "description": "Vorname von Musk"
+    },
+    {
+      "startPoint": {
+        "x": 6,
+        "y": 7
+      },
+      "word": "Abzug",
+      "description": "Rabatt, Nachlass, Reduktion"
+    },
+    {
+      "startPoint": {
+        "x": 3,
+        "y": 9
+      },
+      "word": "Athen",
+      "description": "Hauptstadt von Griechenland"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 10
+      },
+      "word": "Helm",
+      "description": "Schutz für den Kopf"
+    }
+  ],
+  "vertical": [
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 1
+      },
+      "word": "Königreich",
+      "description": "Land mit Monarch"
+    },
+    {
+      "startPoint": {
+        "x": 4,
+        "y": 1
+      },
+      "word": "Bad",
+      "description": "Abkürzung für Badezimmer"
+    },
+    {
+      "startPoint": {
+        "x": 6,
+        "y": 1
+      },
+      "word": "Remoulade",
+      "description": "Würzige Sauce"
+    },
+    {
+      "startPoint": {
+        "x": 9,
+        "y": 3
+      },
+      "word": "Irrtum",
+      "description": "Fehler"
+    },
+    {
+      "startPoint": {
+        "x": 3,
+        "y": 5
+      },
+      "word": "Global",
+      "description": "Weltweit"
+    },
+    {
+      "startPoint": {
+        "x": 4,
+        "y": 9
+      },
+      "word": "TM",
+      "description": "Abkürzung für Trademark"
+    },
+    {
+      "startPoint": {
+        "x": 7,
+        "y": 9
+      },
+      "word": "No",
+      "description": "Englisch für Nein"
+    }
+  ],
+  "finalWord": {
+    "word": "Ölfeld",
+    "letters": [
+      {
+        "word": "Königreich",
+        "letterPos": 2
+      },
+      {
+        "word": "Elon",
+        "letterPos": 2
+      },
+      {
+        "word": "Ufer",
+        "letterPos": 2
+      },
+      {
+        "word": "Remoulade",
+        "letterPos": 2
+      },
+      {
+        "word": "Helm",
+        "letterPos": 3
+      },
+      {
+        "word": "Nordamerika",
+        "letterPos": 4
+      }
+    ]
+  }
+}
