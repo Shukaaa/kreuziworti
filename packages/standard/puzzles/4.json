@@ -1,0 +1,183 @@
+{
+  "horizontal": [
+    {
+      "startPoint": {
+        "x": 2,
+        "y": 2
+      },
+      "word": "EINHEIT",
+      "description": "Gruppe"
+    },
+    {
+      "startPoint": {
+        "x": 8,
+        "y": 3
+      },
+      "word": "äHM",
+      "description": "Zögerndes Füllwort"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 5
+      },
+      "word": "ANARCHISMUS",
+      "description": "Herrschaftsfreie Ideologie"
+    },
+    {
+      "startPoint": {
+        "x": 2,
+        "y": 7
+      },
+      "word": "EIMER",
+      "description": "Behälter mit Henkel"
+    },
+    {
+      "startPoint": {
+        "x": 8,
+        "y": 7
+      },
+      "word": "HEAD",
+      "description": "Englisch für Kopf"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 9
+      },
+      "word": "ACHT",
+      "description": "Zahl"
+    },
+    {
+      "startPoint": {
+        "x": 8,
+        "y": 9
+      },
+      "word": "NAZI",
+      "description": "Anhänger des Nationalsozialismus"
+    },
+    {
+      "startPoint": {
+        "x": 4,
+        "y": 10
+      },
+      "word": "IDOL",
+      "description": "Verehrtes Vorbild"
+    },
+    {
+      "startPoint": {
+        "x": 2,
+        "y": 11
+      },
+      "word": "HSV",
+      "description": "Fußballverein aus Hamburg"
+    }
+  ],
+  "vertical": [
+    {
+      "startPoint": {
+        "x": 2,
+        "y": 1
+      },
+      "word": "GELäNDE",
+      "description": "Freifläche im Freien"
+    },
+    {
+      "startPoint": {
+        "x": 4,
+        "y": 1
+      },
+      "word": "EN",
+      "description": "Ländercode für Estland"
+    },
+    {
+      "startPoint": {
+        "x": 7,
+        "y": 1
+      },
+      "word": "AI",
+      "description": "Abkürzung für Künstliche Intelligenz (engl.)"
+    },
+    {
+      "startPoint": {
+        "x": 6,
+        "y": 2
+      },
+      "word": "EINHORN",
+      "description": "Fabelwesen"
+    },
+    {
+      "startPoint": {
+        "x": 8,
+        "y": 2
+      },
+      "word": "TäUSCHEN",
+      "description": "Absichtlich irreführen"
+    },
+    {
+      "startPoint": {
+        "x": 10,
+        "y": 2
+      },
+      "word": "AMBULANZ",
+      "description": "Fahrzeug für Notfälle"
+    },
+    {
+      "startPoint": {
+        "x": 4,
+        "y": 4
+      },
+      "word": "PRIMITIV",
+      "description": "Einfach und ursprünglich"
+    }
+  ],
+  "finalWord": {
+    "word": "BADEMEISTER",
+    "letters": [
+      {
+        "word": "AMBULANZ",
+        "letterPos": 3
+      },
+      {
+        "word": "ANARCHISMUS",
+        "letterPos": 3
+      },
+      {
+        "word": "GELäNDE",
+        "letterPos": 6
+      },
+      {
+        "word": "HEAD",
+        "letterPos": 2
+      },
+      {
+        "word": "EIMER",
+        "letterPos": 3
+      },
+      {
+        "word": "EN",
+        "letterPos": 1
+      },
+      {
+        "word": "NAZI",
+        "letterPos": 4
+      },
+      {
+        "word": "HSV",
+        "letterPos": 2
+      },
+      {
+        "word": "EINHEIT",
+        "letterPos": 7
+      },
+      {
+        "word": "EIMER",
+        "letterPos": 4
+      },
+      {
+        "word": "ANARCHISMUS",
+        "letterPos": 4
+      }
+    ]
+  }
+}
