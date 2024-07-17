@@ -1,0 +1,207 @@
+{
+  "horizontal": [
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 1
+      },
+      "word": "SCHNABELTIER",
+      "description": "Eierlegendes Säugetier"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 3
+      },
+      "word": "COX",
+      "description": "Steuermann im Rudersport"
+    },
+    {
+      "startPoint": {
+        "x": 5,
+        "y": 3
+      },
+      "word": "LTE",
+      "description": "Mobilfunkstandard für schnelles Internet"
+    },
+    {
+      "startPoint": {
+        "x": 9,
+        "y": 3
+      },
+      "word": "REIS",
+      "description": "Asiatisches Grundnahrungsmittel"
+    },
+    {
+      "startPoint": {
+        "x": 7,
+        "y": 4
+      },
+      "word": "UNI",
+      "description": "Abkürzung für Universität"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 5
+      },
+      "word": "LANDGUT",
+      "description": "Großer landwirtschaftlicher Besitz"
+    },
+    {
+      "startPoint": {
+        "x": 9,
+        "y": 5
+      },
+      "word": "FETE",
+      "description": "Geselliges Fest"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 8
+      },
+      "word": "SPIELER",
+      "description": "Sportler in einem Spiel"
+    },
+    {
+      "startPoint": {
+        "x": 9,
+        "y": 8
+      },
+      "word": "CALL",
+      "description": "Anruf auf englisch"
+    },
+    {
+      "startPoint": {
+        "x": 7,
+        "y": 9
+      },
+      "word": "OCH",
+      "description": "Ausdruck des Bedauerns"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 10
+      },
+      "word": "ULT",
+      "description": "Abkürzung von Ultimate"
+    },
+    {
+      "startPoint": {
+        "x": 5,
+        "y": 10
+      },
+      "word": "CUZ",
+      "description": "Abkürzung von \"because\" (Jugendsprache)"
+    },
+    {
+      "startPoint": {
+        "x": 9,
+        "y": 10
+      },
+      "word": "SINN",
+      "description": "Bedeutung oder Zweck"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 12
+      },
+      "word": "GARTENANLAGE",
+      "description": "Gestalteter Außenbereich"
+    }
+  ],
+  "vertical": [
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 1
+      },
+      "word": "SACHLEISTUNG",
+      "description": "Nicht monetäre Vergütung"
+    },
+    {
+      "startPoint": {
+        "x": 3,
+        "y": 1
+      },
+      "word": "HEXENMEISTER",
+      "description": "Männlicher Zauberer"
+    },
+    {
+      "startPoint": {
+        "x": 5,
+        "y": 1
+      },
+      "word": "ABLAGEFLäCHE",
+      "description": "Platz zum Ablegen"
+    },
+    {
+      "startPoint": {
+        "x": 7,
+        "y": 1
+      },
+      "word": "ELEUTHEROZOA",
+      "description": "Gruppe frei beweglicher Stachelhäuter"
+    },
+    {
+      "startPoint": {
+        "x": 9,
+        "y": 1
+      },
+      "word": "TARIFWECHSEL",
+      "description": "Änderung des Vertrags"
+    },
+    {
+      "startPoint": {
+        "x": 12,
+        "y": 1
+      },
+      "word": "RASIERKLINGE",
+      "description": "Schneide zum Rasieren"
+    }
+  ],
+  "finalWord": {
+    "word": "LITERATUR",
+    "letters": [
+      {
+        "word": "ULT",
+        "letterPos": 2
+      },
+      {
+        "word": "RASIERKLINGE",
+        "letterPos": 9
+      },
+      {
+        "word": "GARTENANLAGE",
+        "letterPos": 4
+      },
+      {
+        "word": "HEXENMEISTER",
+        "letterPos": 2
+      },
+      {
+        "word": "SPIELER",
+        "letterPos": 7
+      },
+      {
+        "word": "TARIFWECHSEL",
+        "letterPos": 2
+      },
+      {
+        "word": "LANDGUT",
+        "letterPos": 7
+      },
+      {
+        "word": "CUZ",
+        "letterPos": 2
+      },
+      {
+        "word": "REIS",
+        "letterPos": 1
+      }
+    ]
+  }
+}

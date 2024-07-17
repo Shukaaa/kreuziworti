@@ -235,7 +235,7 @@
 
 		descriptionsArray.forEach((div) => {
 			const id = div.children[0].innerHTML;
-			const description = div.children[1].innerHTML;
+			const description = div.children[1].value;
 
 			if (description !== "") {
 				data.push({id, description});
