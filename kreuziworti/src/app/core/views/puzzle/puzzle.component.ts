@@ -180,7 +180,7 @@ export class PuzzleComponent implements OnInit {
 
     if (horizontalIndex !== -1) {
       // @ts-ignore
-      return "H" + (horizontalIndex + 1);
+      return "W" + (horizontalIndex + 1);
     }
 
     const verticalIndex = this.puzzleData?.vertical.findIndex(word => {
@@ -189,7 +189,7 @@ export class PuzzleComponent implements OnInit {
 
     if (verticalIndex !== -1) {
       // @ts-ignore
-      return "V" + (verticalIndex + 1);
+      return "S" + (verticalIndex + 1);
     }
 
     return "";
