@@ -1,0 +1,135 @@
+{
+  "horizontal": [
+    {
+      "startPoint": {
+        "x": 2,
+        "y": 2
+      },
+      "word": "Kochstelle",
+      "description": "Herd"
+    },
+    {
+      "startPoint": {
+        "x": 11,
+        "y": 3
+      },
+      "word": "Gips",
+      "description": "Baustoff"
+    },
+    {
+      "startPoint": {
+        "x": 4,
+        "y": 5
+      },
+      "word": "traumatisch",
+      "description": "Seelisch belastend"
+    },
+    {
+      "startPoint": {
+        "x": 6,
+        "y": 6
+      },
+      "word": "RH",
+      "description": "Abkürzung für Reihenhaus"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 7
+      },
+      "word": "Bausparvertrag",
+      "description": "Sparplan für Hausbau"
+    }
+  ],
+  "vertical": [
+    {
+      "startPoint": {
+        "x": 9,
+        "y": 1
+      },
+      "word": "Blamage",
+      "description": "Peinliche Situation"
+    },
+    {
+      "startPoint": {
+        "x": 13,
+        "y": 1
+      },
+      "word": "CAPTCHA",
+      "description": "Bot-Schutz"
+    },
+    {
+      "startPoint": {
+        "x": 2,
+        "y": 4
+      },
+      "word": "Java",
+      "description": "Programmiersprache und Insel in Indonesien"
+    },
+    {
+      "startPoint": {
+        "x": 4,
+        "y": 2
+      },
+      "word": "Chat",
+      "description": "Kommunikation über das Internet"
+    },
+    {
+      "startPoint": {
+        "x": 6,
+        "y": 2
+      },
+      "word": "Sahara",
+      "description": "Größte Wüste der Welt"
+    },
+    {
+      "startPoint": {
+        "x": 11,
+        "y": 2
+      },
+      "word": "Egoist",
+      "description": "Selbstsüchtiger Mensch"
+    },
+    {
+      "startPoint": {
+        "x": 7,
+        "y": 5
+      },
+      "word": "Uhr",
+      "description": "Zeitmesser"
+    }
+  ],
+  "finalWord": {
+    "word": "Taucher",
+    "letters": [
+      {
+        "word": "Kochstelle",
+        "letterPos": 6
+      },
+      {
+        "word": "Java",
+        "letterPos": 2
+      },
+      {
+        "word": "traumatisch",
+        "letterPos": 4
+      },
+      {
+        "word": "CAPTCHA",
+        "letterPos": 1
+      },
+      {
+        "word": "Sahara",
+        "letterPos": 3
+      },
+      {
+        "word": "Blamage",
+        "letterPos": 7
+      },
+      {
+        "word": "RH",
+        "letterPos": 1
+      }
+    ]
+  }
+}

@@ -55,8 +55,9 @@
               ...
             </ng-container>
             <ng-container *ngIf="!isFieldSelected(x+1, y+1)">
-              {{ getWordStart(x + 1, y + 1) }}
-              {{ getFinalWordLetter(x + 1, y + 1) }}
+              <span>{{ getWordStart(x + 1, y + 1) }}</span>
+              <span *ngIf="getWordStart(x + 1, y + 1) && getFinalWordLetter(x + 1, y + 1)">+</span>
+              <span>{{ getFinalWordLetter(x + 1, y + 1) }}</span>
             </ng-container>
           </span>
           <span class="letter" [classList]="getLetter(x + 1, y + 1) === 'x' ? 'letter placeholder' : 'letter'">
