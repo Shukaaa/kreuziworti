@@ -48,6 +48,10 @@
   font-size: 0.5em;
   border-radius: 5px;
   width: 90%;
+
+  &.highlight {
+    animation: highlight-blink 1s infinite;
+  }
 }
 
 .letter {
@@ -76,10 +80,31 @@ section {
 
   &.discovered {
     text-decoration: line-through;
-    color: var(--light-lighten-10);
+    font-style: italic;
+    color: var(--done);
   }
 }
 
 .word-id {
   font-style: italic;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+@keyframes highlight-blink {
+  0% {
+    background-color: var(--dark);
+    color: var(--light);
+  }
+  50% {
+    background-color: var(--light);
+    color: var(--dark);
+  }
+  100% {
+    background-color: var(--dark);
+    color: var(--light);
+  }
 }

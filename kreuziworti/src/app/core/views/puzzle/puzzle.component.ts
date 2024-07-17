@@ -56,6 +56,14 @@ export class PuzzleComponent implements OnInit {
     }
 
     document.addEventListener('keydown', (event) => {
+      if (event.key === "Escape") {
+        this.selectedField = null;
+      }
+
+      if (event.key === "Backspace" || event.key === "Delete") {
+        this.recognizeLetter("x");
+      }
+
       if (event.key.length === 1) {
         this.recognizeLetter(event.key.toUpperCase());
       }
@@ -114,6 +122,11 @@ export class PuzzleComponent implements OnInit {
         });
       } else {
         gameProgress.categoryProgress[categoryProgressIndex].puzzleProgress[puzzleProgressIndex].assignedLetters = this.assignedLetters;
+
+        if (gameProgress.categoryProgress[categoryProgressIndex].puzzleProgress[puzzleProgressIndex].done) {
+          this.done = true;
+        }
+
         gameProgress.categoryProgress[categoryProgressIndex].puzzleProgress[puzzleProgressIndex].done = this.done;
       }
     }
@@ -217,7 +230,6 @@ export class PuzzleComponent implements OnInit {
   }
 
   selectedField: Coordinate | null = null;
-
   recognizeLetter(letter: string) {
     if (this.selectedField !== null) {
       this.setLetter(this.selectedField.x, this.selectedField.y, letter);
@@ -278,6 +290,19 @@ export class PuzzleComponent implements OnInit {
     if (feedback) {
       this.assignedLetters = this.assignedLetters.map(row => row.map(() => "x"));
       this.saveProgress();
+    }
+  }
+
+  highlightLetterTagByCoordinate(coordinate: Coordinate) {
+    const cellElem = document.getElementById(`c-${coordinate.x}-${coordinate.y}`);
+    const letterTagElem = cellElem?.querySelector('.letter-tag');
+
+    if (letterTagElem) {
+      letterTagElem.classList.add('highlight');
+
+      setTimeout(() => {
+        letterTagElem.classList.remove('highlight');
+      }, 4000);
     }
   }
 }

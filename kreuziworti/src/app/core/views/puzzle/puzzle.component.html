@@ -14,7 +14,7 @@
         <h3>Waagerecht</h3>
         <div class="word-hints" *ngFor="let word of puzzleData.horizontal; index as i">
           <div [classList]="wordDiscovered(word, true) ? 'word-hint discovered' : 'word-hint'">
-            <span class="word-id">W{{ i + 1 }}</span>
+            <span class="word-id" (click)="highlightLetterTagByCoordinate(word.startPoint)">W{{ i + 1 }}</span>
             <span class="word-description">{{ word.description }}</span>
           </div>
         </div>
@@ -22,7 +22,7 @@
         <h3>Senkrecht</h3>
         <div class="word-hints" *ngFor="let word of puzzleData.vertical; index as i">
           <div [classList]="wordDiscovered(word, false) ? 'word-hint discovered' : 'word-hint'">
-            <span class="word-id">S{{ i + 1 }}</span>
+            <span class="word-id" (click)="highlightLetterTagByCoordinate(word.startPoint)">S{{ i + 1 }}</span>
             <span class="word-description">{{ word.description }}</span>
           </div>
         </div>
@@ -49,6 +49,7 @@
         <div *ngFor="let __ of getArray(getGameFieldSize().y); let y = index"
              [className]="getCellClass(x+1, y+1)"
              (click)="selectField(x+1, y+1)"
+             id="c-{{ x + 1 }}-{{ y + 1 }}"
         >
           <span class="letter-tag">
             <ng-container *ngIf="isFieldSelected(x+1, y+1)">
