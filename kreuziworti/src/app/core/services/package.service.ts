@@ -51,19 +51,19 @@ export class PackageService {
 
   private async getCategoryMetaData(pkg: string): Promise<CrosswordCategory> {
     const categoryMetaDataUrl = `https://raw.githubusercontent.com/Shukaaa/kreuziworti/master/packages/${pkg}/category.json`;
-    const categoryMetaDataResponse = await fetch(categoryMetaDataUrl);
+    const categoryMetaDataResponse = await fetch(categoryMetaDataUrl, { cache: 'no-store' });
     const categoryMetaData = await categoryMetaDataResponse.json();
     return {...categoryMetaData, puzzles: []};
   }
 
   private async getPuzzleMetaData(pkg: string, puzzleNumber: number): Promise<CrosswordPuzzle> {
     const puzzleMetaDataUrl = `https://raw.githubusercontent.com/Shukaaa/kreuziworti/master/packages/${pkg}/puzzles/${puzzleNumber}.json`;
-    const puzzleMetaDataResponse = await fetch(puzzleMetaDataUrl);
+    const puzzleMetaDataResponse = await fetch(puzzleMetaDataUrl, { cache: 'no-store' });
     return await puzzleMetaDataResponse.json();
   }
 
   private async getAllAvailablePackages(): Promise<PackageList> {
-    const response = await fetch(this.packageStorageUrl);
+    const response = await fetch(this.packageStorageUrl, { cache: 'no-store' });
     return await response.json();
   }
 }
