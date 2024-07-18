@@ -42,19 +42,57 @@ export class PuzzleComponent implements OnInit {
     this.categoryTitle = category.title;
     this.puzzleId = puzzleId;
 
-    // check if game progress for this puzzle exists
+    this.setupPuzzle(categoryId);
+    this.initializeKeyListeners();
+  }
+
+  setupPuzzle(categoryId: string): void {
     const gameProgress = this.gameProgressStore.getGameProgress();
-    const puzzleProgress = gameProgress.categoryProgress.find(categoryProgress => categoryProgress.categoryId === categoryId)
-      ?.puzzleProgress.find(puzzleProgress => puzzleProgress.puzzleId === puzzleId);
+    const categoryProgress = gameProgress.categoryProgress.find(
+      categoryProgress => categoryProgress.categoryId === categoryId
+    );
+    const puzzleProgress = categoryProgress?.puzzleProgress.find(
+      puzzleProgress => puzzleProgress.puzzleId === this.puzzleId
+    );
 
     if (puzzleProgress) {
       this.assignedLetters = puzzleProgress.assignedLetters;
     } else {
-      // initialize assignedLetters array with x
       const gameFieldSize = this.getGameFieldSize();
-      this.assignedLetters = this.getArray(gameFieldSize.y).map(() => this.getArray(gameFieldSize.x).map(() => "x"));
+      this.assignedLetters = Array.from({ length: gameFieldSize.y }, () =>
+        Array.from({ length: gameFieldSize.x }, () => "x")
+      );
     }
 
+    if (!this.puzzleData) {
+      return;
+    }
+
+    const { finalWord } = this.puzzleData;
+    const { letters: finalWordLetters } = finalWord;
+
+    finalWordLetters.forEach(letter => {
+      const { word, letterPos } = letter;
+
+      this.puzzleData?.horizontal.forEach(hWord => {
+        if (hWord.word === word) {
+          const x = hWord.startPoint.x + letterPos - 1;
+          const y = hWord.startPoint.y;
+          this.finalLetterLocations.push({ x, y });
+        }
+      });
+
+      this.puzzleData?.vertical.forEach(vWord => {
+        if (vWord.word === word) {
+          const x = vWord.startPoint.x;
+          const y = vWord.startPoint.y + letterPos - 1;
+          this.finalLetterLocations.push({ x, y });
+        }
+      });
+    });
+  }
+
+  initializeKeyListeners(): void {
     document.addEventListener('keydown', (event) => {
       if (event.key === "Escape") {
         this.selectedField = null;
@@ -68,35 +106,10 @@ export class PuzzleComponent implements OnInit {
         this.recognizeLetter(event.key.toUpperCase());
       }
     });
-
-    // determine final word location by x and y coordinates
-    const finalWord = this.puzzleData.finalWord;
-    const finalWordLetters = finalWord.letters;
-    for (const letter of finalWordLetters) {
-      const word = letter.word;
-      const letterPos = letter.letterPos;
-
-      this.puzzleData.horizontal.forEach((hWord) => {
-        if (hWord.word === word) {
-          const x = hWord.startPoint.x + letterPos - 1;
-          const y = hWord.startPoint.y;
-          this.finalLetterLocations.push({x, y});
-        }
-      });
-
-      this.puzzleData.vertical.forEach((vWord) => {
-        if (vWord.word === word) {
-          const x = vWord.startPoint.x;
-          const y = vWord.startPoint.y + letterPos - 1;
-          this.finalLetterLocations.push({x, y});
-        }
-      });
-    }
   }
 
-  saveProgress() {
-    const categoryId = this.route.snapshot.params['categoryId'];
-    const puzzleId = this.route.snapshot.params['puzzleId'];
+  saveProgress(): void {
+    const {categoryId, puzzleId} = this.route.snapshot.params;
     const gameProgress = this.gameProgressStore.getGameProgress();
     const categoryProgressIndex = gameProgress.categoryProgress.findIndex(categoryProgress => categoryProgress.categoryId === categoryId);
 
@@ -134,24 +147,20 @@ export class PuzzleComponent implements OnInit {
     this.gameProgressStore.setGameProgress(gameProgress);
   }
 
-  wordDiscovered(word: CrosswordWord, isHorizontal: boolean): boolean {
-    if (isHorizontal) {
-      for (let i = word.startPoint.x; i <= word.endPoint.x; i++) {
-        const assignedLetter = this.assignedLetters[word.startPoint.y - 1][i - 1].toUpperCase();
-        const wordLetter = word.word[i - word.startPoint.x].toUpperCase();
-        if (assignedLetter !== wordLetter) {
-          return false;
-        }
-      }
-    }
+  isWordDiscovered(word: CrosswordWord, isHorizontal: boolean): boolean {
+    const start = isHorizontal ? word.startPoint.x : word.startPoint.y;
+    const end = isHorizontal ? word.endPoint.x : word.endPoint.y;
+    const fixedCoordinate = isHorizontal ? word.startPoint.y : word.startPoint.x;
 
-    if (!isHorizontal) {
-      for (let i = word.startPoint.y; i <= word.endPoint.y; i++) {
-        const assignedLetter = this.assignedLetters[i - 1][word.startPoint.x - 1].toUpperCase();
-        const wordLetter = word.word[i - word.startPoint.y].toUpperCase();
-        if (assignedLetter !== wordLetter) {
-          return false;
-        }
+    for (let i = start; i <= end; i++) {
+      const assignedLetter = isHorizontal
+        ? this.assignedLetters[fixedCoordinate - 1][i - 1].toUpperCase()
+        : this.assignedLetters[i - 1][fixedCoordinate - 1].toUpperCase();
+
+      const wordLetter = word.word[i - start].toUpperCase();
+
+      if (assignedLetter !== wordLetter) {
+        return false;
       }
     }
 
@@ -163,20 +172,20 @@ export class PuzzleComponent implements OnInit {
   }
 
   getGameFieldSize(): Coordinate {
-    const horizontal = this.puzzleData?.horizontal.reduce((acc, word) => {
-      const max = Math.max(word.startPoint.x, word.endPoint.x);
-      return max > acc ? max : acc;
-    }, 0) as number;
+    const getMaxCoordinate = (words: CrosswordWord[], isHorizontal: boolean): number => {
+      return words.reduce((acc, word) => {
+        const max = isHorizontal ? Math.max(word.startPoint.x, word.endPoint.x) : Math.max(word.startPoint.y, word.endPoint.y);
+        return max > acc ? max : acc;
+      }, 0);
+    };
 
-    const vertical = this.puzzleData?.vertical.reduce((acc, word) => {
-      const max = Math.max(word.startPoint.y, word.endPoint.y);
-      return max > acc ? max : acc;
-    }, 0) as number;
+    const horizontal = this.puzzleData ? getMaxCoordinate(this.puzzleData.horizontal, true) : 0;
+    const vertical = this.puzzleData ? getMaxCoordinate(this.puzzleData.vertical, false) : 0;
 
-    return {x: horizontal, y: vertical}
+    return {x: horizontal, y: vertical};
   }
 
-  isLetterField(x: number, y: number) {
+  isLetterField(x: number, y: number): boolean | undefined {
     return this.puzzleData?.horizontal.some(word => {
       return x >= word.startPoint.x && x <= word.endPoint.x && y === word.startPoint.y;
     }) || this.puzzleData?.vertical.some(word => {
@@ -184,40 +193,24 @@ export class PuzzleComponent implements OnInit {
     });
   }
 
-  getWordStart(x: number, y: number): string {
-    // get index of word in horizontal or vertical array
+  getWordStartTag(x: number, y: number): string {
+    const findWordIndex = (words: CrosswordWord[], type: string): string | undefined => {
+      const index = words.findIndex(word => x === word.startPoint.x && y === word.startPoint.y);
+      return index !== -1 ? type + (index + 1) : undefined;
+    };
 
-    const horizontalIndex = this.puzzleData?.horizontal.findIndex(word => {
-      return x === word.startPoint.x && y === word.startPoint.y;
-    });
+    const horizontalTag = this.puzzleData ? findWordIndex(this.puzzleData.horizontal, "W") : undefined;
+    if (horizontalTag) return horizontalTag;
 
-    if (horizontalIndex !== -1) {
-      // @ts-ignore
-      return "W" + (horizontalIndex + 1);
-    }
-
-    const verticalIndex = this.puzzleData?.vertical.findIndex(word => {
-      return x === word.startPoint.x && y === word.startPoint.y;
-    });
-
-    if (verticalIndex !== -1) {
-      // @ts-ignore
-      return "S" + (verticalIndex + 1);
-    }
+    const verticalTag = this.puzzleData ? findWordIndex(this.puzzleData.vertical, "S") : undefined;
+    if (verticalTag) return verticalTag;
 
     return "";
   }
 
-  getFinalWordLetter(x: number, y: number) {
-    const isFinalWorldLetter = this.finalLetterLocations.some((location) => {
-      return location.x === x && location.y === y;
-    });
-
-    const index = this.finalLetterLocations.findIndex((location) => {
-      return location.x === x && location.y === y;
-    });
-
-    return isFinalWorldLetter ? "L" + (index + 1) : "";
+  getFinalWordTag(x: number, y: number): string {
+    const index = this.finalLetterLocations.findIndex(location => location.x === x && location.y === y);
+    return index !== -1 ? "L" + (index + 1) : "";
   }
 
   getLetter(x: number, y: number): string {
@@ -230,27 +223,26 @@ export class PuzzleComponent implements OnInit {
   }
 
   selectedField: Coordinate | null = null;
-  recognizeLetter(letter: string) {
-    if (this.selectedField !== null) {
+
+  recognizeLetter(letter: string): void {
+    if (this.selectedField) {
       this.setLetter(this.selectedField.x, this.selectedField.y, letter);
       this.selectedField = null;
     }
   }
 
-  selectField(x: number, y: number) {
+  selectField(x: number, y: number): void {
     if (this.isLetterField(x, y)) {
       this.selectedField = {x, y};
     }
   }
 
-  isFieldSelected(x: number, y: number) {
+  isFieldSelected(x: number, y: number): boolean {
     return this.selectedField !== null && this.selectedField.x === x && this.selectedField.y === y;
   }
 
-  getCellClass(x: number, y: number) {
-    let classes = [
-      "cell"
-    ];
+  getCellClassString(x: number, y: number): string {
+    const classes = ["cell"];
 
     if (this.isLetterField(x, y)) {
       classes.push("letter");
@@ -264,27 +256,24 @@ export class PuzzleComponent implements OnInit {
   }
 
   get finalWord(): string {
-    let word = ""
-    for (let i = 0; i < this.finalLetterLocations.length; i++) {
-      word += this.getLetter(this.finalLetterLocations[i].x, this.finalLetterLocations[i].y);
-    }
-    return word;
+    return this.finalLetterLocations.reduce((word, location) => {
+      return word + this.getLetter(location.x, location.y);
+    }, "");
   }
 
-  checkSolution() {
+  checkSolution(): void {
     if (this.finalWord === this.puzzleData?.finalWord.word.toUpperCase()) {
       this.done = true;
       this.saveProgress();
       alert("YAAAY! Du hast es gerockt!");
-      this.router.navigate(['/home']).then(r => r);
-      return
+      this.router.navigate(['/home']);
+    } else {
+      this.done = false;
+      alert("Nahhh, das war leider nicht korrekt. Versuch es nochmal!");
     }
-
-    this.done = false;
-    alert("Nahhh, das war leider nicht korrekt. Versuch es nochmal!");
   }
 
-  resetGameData() {
+  resetGameData(): void {
     const feedback = confirm("Möchtest du wirklich das Rätsel zurücksetzen? :o");
 
     if (feedback) {
@@ -293,19 +282,19 @@ export class PuzzleComponent implements OnInit {
     }
   }
 
-  highlightLettersByCoordinates(start: Coordinate, end: Coordinate, hv: 'horizontal' | 'vertical') {
-    if (hv === 'horizontal') {
-      for (let i = start.x; i <= end.x; i++) {
-        this.highlightLetterByCoordinates({x: i, y: start.y});
-      }
-    } else {
-      for (let i = start.y; i <= end.y; i++) {
-        this.highlightLetterByCoordinates({x: start.x, y: i});
-      }
+  highlightLettersByCoordinates(start: Coordinate, end: Coordinate, hv: 'horizontal' | 'vertical'): void {
+    const isHorizontal = hv === 'horizontal';
+    const [fixedCoord, rangeStart, rangeEnd] = isHorizontal
+      ? [start.y, start.x, end.x]
+      : [start.x, start.y, end.y];
+
+    for (let i = rangeStart; i <= rangeEnd; i++) {
+      const coord = isHorizontal ? {x: i, y: fixedCoord} : {x: fixedCoord, y: i};
+      this.highlightLetterByCoordinates(coord);
     }
   }
 
-  highlightLetterByCoordinates(coords: Coordinate) {
+  highlightLetterByCoordinates(coords: Coordinate): void {
     const cellElement = document.getElementById(`c-${coords.x}-${coords.y}`);
     if (cellElement) {
       cellElement.classList.add('highlight');

@@ -13,7 +13,7 @@
       <div class="word-hint-section">
         <h3>Waagerecht</h3>
         <div class="word-hints" *ngFor="let word of puzzleData.horizontal; index as i">
-          <div [classList]="wordDiscovered(word, true) ? 'word-hint discovered' : 'word-hint'">
+          <div [classList]="isWordDiscovered(word, true) ? 'word-hint discovered' : 'word-hint'">
             <span class="word-id" (click)="highlightLettersByCoordinates(word.startPoint, word.endPoint, 'horizontal')">W{{ i + 1 }}</span>
             <span class="word-description">{{ word.description }}</span>
           </div>
@@ -21,7 +21,7 @@
         <br/>
         <h3>Senkrecht</h3>
         <div class="word-hints" *ngFor="let word of puzzleData.vertical; index as i">
-          <div [classList]="wordDiscovered(word, false) ? 'word-hint discovered' : 'word-hint'">
+          <div [classList]="isWordDiscovered(word, false) ? 'word-hint discovered' : 'word-hint'">
             <span class="word-id" (click)="highlightLettersByCoordinates(word.startPoint, word.endPoint, 'vertical')">S{{ i + 1 }}</span>
             <span class="word-description">{{ word.description }}</span>
           </div>
@@ -53,7 +53,7 @@
     >
       <div class="row" *ngFor="let _ of getArray(getGameFieldSize().x); let x = index">
         <div *ngFor="let __ of getArray(getGameFieldSize().y); let y = index"
-             [className]="getCellClass(x+1, y+1)"
+             [className]="getCellClassString(x+1, y+1)"
              (click)="selectField(x+1, y+1)"
              id="c-{{ x + 1 }}-{{ y + 1 }}"
         >
@@ -62,9 +62,9 @@
               ...
             </ng-container>
             <ng-container *ngIf="!isFieldSelected(x+1, y+1)">
-              <span>{{ getWordStart(x + 1, y + 1) }}</span>
-              <span *ngIf="getWordStart(x + 1, y + 1) && getFinalWordLetter(x + 1, y + 1)">+</span>
-              <span>{{ getFinalWordLetter(x + 1, y + 1) }}</span>
+              <span>{{ getWordStartTag(x + 1, y + 1) }}</span>
+              <span *ngIf="getWordStartTag(x + 1, y + 1) && getFinalWordTag(x + 1, y + 1)">+</span>
+              <span>{{ getFinalWordTag(x + 1, y + 1) }}</span>
             </ng-container>
           </span>
           <span class="letter" [classList]="getLetter(x + 1, y + 1) === 'x' ? 'letter placeholder' : 'letter'">
