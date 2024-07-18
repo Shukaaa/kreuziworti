@@ -1,8 +1,13 @@
-.hamsti {
+#hamsti {
   width: 50px;
   height: auto;
+  cursor: pointer;
 
   animation: movement 1s infinite;
+
+  &.spin {
+    animation: spin 0.25s infinite linear;
+  }
 }
 
 .title {
@@ -29,5 +34,14 @@
   }
   100% {
     transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

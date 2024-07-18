@@ -64,4 +64,19 @@ export class HomeComponent implements OnInit {
 
     return ''
   }
+
+  triggerHamstiAnimation() {
+    const hamsti = document.getElementById('hamsti') as HTMLImageElement
+    hamsti.className = 'spin';
+    setTimeout(() => {
+      hamsti.className = ''
+
+      if (hamsti.src.includes('diamond')) {
+        hamsti.src = 'assets/hamsti.webp'
+        return
+      }
+
+      hamsti.src = 'assets/hamsti_diamond.webp'
+    }, 2000)
+  }
 }
