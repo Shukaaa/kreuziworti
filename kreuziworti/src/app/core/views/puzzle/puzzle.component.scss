@@ -40,6 +40,10 @@
     background-color: var(--light-darken-20);
     color: var(--dark);
   }
+
+  &.highlight {
+    animation: highlight-blink 1s infinite;
+  }
 }
 
 .letter-tag {
@@ -48,10 +52,6 @@
   font-size: 0.5em;
   border-radius: 5px;
   width: 90%;
-
-  &.highlight {
-    animation: highlight-blink 1s infinite;
-  }
 }
 
 .letter {
@@ -94,17 +94,25 @@ section {
   }
 }
 
+.final-word-char {
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 @keyframes highlight-blink {
   0% {
-    background-color: var(--dark);
-    color: var(--light);
-  }
-  50% {
     background-color: var(--light);
     color: var(--dark);
   }
-  100% {
+  50% {
     background-color: var(--dark);
     color: var(--light);
+  }
+  100% {
+    background-color: var(--light);
+    color: var(--dark);
   }
 }

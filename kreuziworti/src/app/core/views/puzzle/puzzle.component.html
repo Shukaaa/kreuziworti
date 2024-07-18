@@ -14,7 +14,7 @@
         <h3>Waagerecht</h3>
         <div class="word-hints" *ngFor="let word of puzzleData.horizontal; index as i">
           <div [classList]="wordDiscovered(word, true) ? 'word-hint discovered' : 'word-hint'">
-            <span class="word-id" (click)="highlightLetterTagByCoordinate(word.startPoint)">W{{ i + 1 }}</span>
+            <span class="word-id" (click)="highlightLettersByCoordinates(word.startPoint, word.endPoint, 'horizontal')">W{{ i + 1 }}</span>
             <span class="word-description">{{ word.description }}</span>
           </div>
         </div>
@@ -22,7 +22,7 @@
         <h3>Senkrecht</h3>
         <div class="word-hints" *ngFor="let word of puzzleData.vertical; index as i">
           <div [classList]="wordDiscovered(word, false) ? 'word-hint discovered' : 'word-hint'">
-            <span class="word-id" (click)="highlightLetterTagByCoordinate(word.startPoint)">S{{ i + 1 }}</span>
+            <span class="word-id" (click)="highlightLettersByCoordinates(word.startPoint, word.endPoint, 'vertical')">S{{ i + 1 }}</span>
             <span class="word-description">{{ word.description }}</span>
           </div>
         </div>
@@ -30,7 +30,13 @@
       <div class="divider"></div>
       <div>
         <h3>Lösungswort</h3>
-        <span class="final-word">Lösung: {{ finalWord }}</span>
+        <span class="final-word">Lösung:
+          <span
+            class="final-word-char"
+            *ngFor="let charIndex of getArray(finalWord.length)"
+            (click)="highlightLetterByCoordinates(getFinalWordLetterCoordinates(charIndex))"
+          >{{finalWord[charIndex]}}</span>
+        </span>
         <br/>
         <button (click)="checkSolution()">Lösung prüfen</button>
       </div>

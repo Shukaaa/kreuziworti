@@ -293,16 +293,29 @@ export class PuzzleComponent implements OnInit {
     }
   }
 
-  highlightLetterTagByCoordinate(coordinate: Coordinate) {
-    const cellElem = document.getElementById(`c-${coordinate.x}-${coordinate.y}`);
-    const letterTagElem = cellElem?.querySelector('.letter-tag');
-
-    if (letterTagElem) {
-      letterTagElem.classList.add('highlight');
-
-      setTimeout(() => {
-        letterTagElem.classList.remove('highlight');
-      }, 4000);
+  highlightLettersByCoordinates(start: Coordinate, end: Coordinate, hv: 'horizontal' | 'vertical') {
+    if (hv === 'horizontal') {
+      for (let i = start.x; i <= end.x; i++) {
+        this.highlightLetterByCoordinates({x: i, y: start.y});
+      }
+    } else {
+      for (let i = start.y; i <= end.y; i++) {
+        this.highlightLetterByCoordinates({x: start.x, y: i});
+      }
     }
+  }
+
+  highlightLetterByCoordinates(coords: Coordinate) {
+    const cellElement = document.getElementById(`c-${coords.x}-${coords.y}`);
+    if (cellElement) {
+      cellElement.classList.add('highlight');
+      setTimeout(() => {
+        cellElement.classList.remove('highlight');
+      }, 3000);
+    }
+  }
+
+  getFinalWordLetterCoordinates(index: number): Coordinate {
+    return this.finalLetterLocations[index];
   }
 }
