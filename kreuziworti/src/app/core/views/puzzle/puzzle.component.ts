@@ -105,6 +105,38 @@ export class PuzzleComponent implements OnInit {
       if (event.key.length === 1) {
         this.recognizeLetter(event.key.toUpperCase());
       }
+
+      if (event.key === "ArrowUp" && this.selectedField) {
+        const newY = this.selectedField.y - 1;
+
+        if (this.isLetterField(this.selectedField.x, newY)) {
+          this.selectedField.y = newY;
+        }
+      }
+
+      if (event.key === "ArrowDown" && this.selectedField) {
+        const newY = this.selectedField.y + 1;
+
+        if (this.isLetterField(this.selectedField.x, newY)) {
+          this.selectedField.y = newY;
+        }
+      }
+
+      if (event.key === "ArrowLeft" && this.selectedField) {
+        const newX = this.selectedField.x - 1;
+
+        if (this.isLetterField(newX, this.selectedField.y)) {
+          this.selectedField.x = newX;
+        }
+      }
+
+      if (event.key === "ArrowRight" && this.selectedField) {
+        const newX = this.selectedField.x + 1;
+
+        if (this.isLetterField(newX, this.selectedField.y)) {
+          this.selectedField.x = newX;
+        }
+      }
     });
   }
 
@@ -223,11 +255,9 @@ export class PuzzleComponent implements OnInit {
   }
 
   selectedField: Coordinate | null = null;
-
   recognizeLetter(letter: string): void {
     if (this.selectedField) {
       this.setLetter(this.selectedField.x, this.selectedField.y, letter);
-      this.selectedField = null;
     }
   }
 

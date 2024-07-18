@@ -13,16 +13,20 @@
       <div class="word-hint-section">
         <h3>Waagerecht</h3>
         <div class="word-hints" *ngFor="let word of puzzleData.horizontal; index as i">
-          <div [classList]="isWordDiscovered(word, true) ? 'word-hint discovered' : 'word-hint'">
-            <span class="word-id" (click)="highlightLettersByCoordinates(word.startPoint, word.endPoint, 'horizontal')">W{{ i + 1 }}</span>
+          <div
+            (click)="highlightLettersByCoordinates(word.startPoint, word.endPoint, 'horizontal')"
+            [classList]="isWordDiscovered(word, true) ? 'word-hint discovered' : 'word-hint'">
+            <span class="word-id">W{{ i + 1 }}</span>
             <span class="word-description">{{ word.description }}</span>
           </div>
         </div>
         <br/>
         <h3>Senkrecht</h3>
         <div class="word-hints" *ngFor="let word of puzzleData.vertical; index as i">
-          <div [classList]="isWordDiscovered(word, false) ? 'word-hint discovered' : 'word-hint'">
-            <span class="word-id" (click)="highlightLettersByCoordinates(word.startPoint, word.endPoint, 'vertical')">S{{ i + 1 }}</span>
+          <div
+            (click)="highlightLettersByCoordinates(word.startPoint, word.endPoint, 'vertical')"
+            [classList]="isWordDiscovered(word, false) ? 'word-hint discovered' : 'word-hint'">
+            <span class="word-id">S{{ i + 1 }}</span>
             <span class="word-description">{{ word.description }}</span>
           </div>
         </div>

@@ -32,12 +32,12 @@
     }
 
     &:hover:not(.selected) {
-      background-color: var(--light-darken-10);
+      background-color: var(--light-darken-5);
     }
   }
 
   &.selected {
-    background-color: var(--light-darken-20);
+    background-color: var(--light-darken-10);
     color: var(--dark);
   }
 
@@ -77,6 +77,11 @@ section {
   margin: 0 1em;
   gap: 1em;
   font-size: 0.9em;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
 
   &.discovered {
     text-decoration: line-through;
@@ -87,11 +92,6 @@ section {
 
 .word-id {
   font-style: italic;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
-  }
 }
 
 .final-word-char {
