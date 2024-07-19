@@ -1,0 +1,203 @@
+{
+  "horizontal": [
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 2
+      },
+      "word": "HOKUSPOKUS",
+      "description": "Zauberspruch oder Trick"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 5
+      },
+      "word": "VIDEOSPIEL",
+      "description": "Elektronisches Unterhaltungsspiel"
+    },
+    {
+      "startPoint": {
+        "x": 6,
+        "y": 6
+      },
+      "word": "EUTER",
+      "description": "Milchproduzierendes Organ"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 8
+      },
+      "word": "EINSATZ",
+      "description": "Investiertes Kapital"
+    },
+    {
+      "startPoint": {
+        "x": 2,
+        "y": 10
+      },
+      "word": "SAMTKLEID",
+      "description": "Kleid aus weichem Stoff"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 12
+      },
+      "word": "PIRANHA",
+      "description": "Gefährlicher Raubfisch"
+    },
+    {
+      "startPoint": {
+        "x": 6,
+        "y": 13
+      },
+      "word": "DUSCHE",
+      "description": "Vorrichtung zum Waschen"
+    }
+  ],
+  "vertical": [
+    {
+      "startPoint": {
+        "x": 2,
+        "y": 1
+      },
+      "word": "LOLLI",
+      "description": "Lutscher am Stiel"
+    },
+    {
+      "startPoint": {
+        "x": 4,
+        "y": 1
+      },
+      "word": "AUFMERKSAM",
+      "description": "Konzentrationsfähig und wachsam"
+    },
+    {
+      "startPoint": {
+        "x": 6,
+        "y": 1
+      },
+      "word": "SPEISE",
+      "description": "Gericht oder Mahlzeit"
+    },
+    {
+      "startPoint": {
+        "x": 8,
+        "y": 1
+      },
+      "word": "FKK",
+      "description": "Freikörperkultur abgekürzt"
+    },
+    {
+      "startPoint": {
+        "x": 10,
+        "y": 1
+      },
+      "word": "ASB",
+      "description": "Arbeiter-Samariter-Bund"
+    },
+    {
+      "startPoint": {
+        "x": 9,
+        "y": 4
+      },
+      "word": "SEE",
+      "description": "Binnengewässer größer als Teich"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 5
+      },
+      "word": "VOGEL",
+      "description": "Federtragendes Tier"
+    },
+    {
+      "startPoint": {
+        "x": 7,
+        "y": 5
+      },
+      "word": "PURZELBAUM",
+      "description": "Vorwärtsrolle beim Turnen"
+    },
+    {
+      "startPoint": {
+        "x": 8,
+        "y": 5
+      },
+      "word": "IT",
+      "description": "Technologie- und Informatikbereich"
+    },
+    {
+      "startPoint": {
+        "x": 10,
+        "y": 5
+      },
+      "word": "LRS",
+      "description": "Lese-Rechtschreib-Schwäche"
+    },
+    {
+      "startPoint": {
+        "x": 9,
+        "y": 8
+      },
+      "word": "BEIKOCH",
+      "description": "Küchenhelfer beim Kochen"
+    },
+    {
+      "startPoint": {
+        "x": 6,
+        "y": 12
+      },
+      "word": "HD",
+      "description": "Hohe Auflösung abgekürzt"
+    }
+  ],
+  "finalWord": {
+    "word": "DEKORATION",
+    "letters": [
+      {
+        "word": "VIDEOSPIEL",
+        "letterPos": 3
+      },
+      {
+        "word": "DUSCHE",
+        "letterPos": 6
+      },
+      {
+        "word": "HOKUSPOKUS",
+        "letterPos": 3
+      },
+      {
+        "word": "BEIKOCH",
+        "letterPos": 5
+      },
+      {
+        "word": "PIRANHA",
+        "letterPos": 3
+      },
+      {
+        "word": "AUFMERKSAM",
+        "letterPos": 9
+      },
+      {
+        "word": "EUTER",
+        "letterPos": 3
+      },
+      {
+        "word": "EINSATZ",
+        "letterPos": 2
+      },
+      {
+        "word": "VOGEL",
+        "letterPos": 2
+      },
+      {
+        "word": "EINSATZ",
+        "letterPos": 3
+      }
+    ]
+  }
+}
