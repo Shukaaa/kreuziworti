@@ -225,24 +225,27 @@ export class PuzzleComponent implements OnInit {
     });
   }
 
-  getWordStartTag(x: number, y: number): string {
+  getFieldTags(x: number, y: number): string[] {
     const findWordIndex = (words: CrosswordWord[], type: string): string | undefined => {
       const index = words.findIndex(word => x === word.startPoint.x && y === word.startPoint.y);
       return index !== -1 ? type + (index + 1) : undefined;
     };
+    const findLetterIndex = (letters: Coordinate[], type: string): string | undefined => {
+      const index = letters.findIndex(letter => x === letter.x && y === letter.y);
+      return index !== -1 ? type + (index + 1) : undefined;
+    }
+    const tags: string[] = [];
 
     const horizontalTag = this.puzzleData ? findWordIndex(this.puzzleData.horizontal, "W") : undefined;
-    if (horizontalTag) return horizontalTag;
+    if (horizontalTag) tags.push(horizontalTag);
 
     const verticalTag = this.puzzleData ? findWordIndex(this.puzzleData.vertical, "S") : undefined;
-    if (verticalTag) return verticalTag;
+    if (verticalTag) tags.push(verticalTag);
 
-    return "";
-  }
+    const finalWordTag = findLetterIndex(this.finalLetterLocations, "L");
+    if (finalWordTag) tags.push(finalWordTag);
 
-  getFinalWordTag(x: number, y: number): string {
-    const index = this.finalLetterLocations.findIndex(location => location.x === x && location.y === y);
-    return index !== -1 ? "L" + (index + 1) : "";
+    return tags;
   }
 
   getLetter(x: number, y: number): string {
@@ -318,19 +321,25 @@ export class PuzzleComponent implements OnInit {
       ? [start.y, start.x, end.x]
       : [start.x, start.y, end.y];
 
+    this.selectField(start.x, start.y);
+
     for (let i = rangeStart; i <= rangeEnd; i++) {
       const coord = isHorizontal ? {x: i, y: fixedCoord} : {x: fixedCoord, y: i};
       this.highlightLetterByCoordinates(coord);
     }
   }
 
-  highlightLetterByCoordinates(coords: Coordinate): void {
+  highlightLetterByCoordinates(coords: Coordinate, select = false): void {
     const cellElement = document.getElementById(`c-${coords.x}-${coords.y}`);
     if (cellElement) {
+      if (select) {
+        this.selectField(coords.x, coords.y);
+      }
+
       cellElement.classList.add('highlight');
       setTimeout(() => {
         cellElement.classList.remove('highlight');
-      }, 3000);
+      }, 2000);
     }
   }
 

@@ -5,7 +5,7 @@
   <h1>{{ categoryTitle }} {{ puzzleId }}</h1>
   {{ getGameFieldSize().x + 'x' + getGameFieldSize().y + ' Felder' }}
   <blockquote>
-    ➡ W = Waagerecht, S = Senkrecht, L = Lösungswort
+    W = Waagerecht (➡), S = Senkrecht (⬇), L = Lösungswort
   </blockquote>
   <div class="divider"></div>
   <section>
@@ -38,7 +38,7 @@
           <span
             class="final-word-char"
             *ngFor="let charIndex of getArray(finalWord.length)"
-            (click)="highlightLetterByCoordinates(getFinalWordLetterCoordinates(charIndex))"
+            (click)="highlightLetterByCoordinates(getFinalWordLetterCoordinates(charIndex), true)"
           >{{finalWord[charIndex]}}</span>
         </span>
         <br/>
@@ -66,9 +66,7 @@
               ...
             </ng-container>
             <ng-container *ngIf="!isFieldSelected(x+1, y+1)">
-              <span>{{ getWordStartTag(x + 1, y + 1) }}</span>
-              <span *ngIf="getWordStartTag(x + 1, y + 1) && getFinalWordTag(x + 1, y + 1)">+</span>
-              <span>{{ getFinalWordTag(x + 1, y + 1) }}</span>
+              <span>{{ getFieldTags(x + 1, y + 1).join("+") }}</span>
             </ng-container>
           </span>
           <span class="letter" [classList]="getLetter(x + 1, y + 1) === 'x' ? 'letter placeholder' : 'letter'">
@@ -80,4 +78,5 @@
   </section>
   <div class="divider"></div>
   Zurück zur <a [routerLink]="['/']">Startseite</a>
+  <div class="divider"></div>
 </ng-container>

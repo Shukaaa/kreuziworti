@@ -7,9 +7,17 @@
   user-select: none;
 }
 
+.left {
+  font-size: 0.8em;
+
+  & > .divider {
+    width: 98%;
+  }
+}
+
 .cell {
-  width: 75px;
-  height: 75px;
+  width: 4.75vw;
+  height: 4.75vw;
 
   display: grid;
   grid-template-columns: 1fr;
@@ -42,16 +50,17 @@
   }
 
   &.highlight {
-    animation: highlight-blink 1s infinite;
+    animation: highlight-blink 0.75s infinite;
   }
 }
 
 .letter-tag {
   background-color: var(--dark);
   color: var(--light);
-  font-size: 0.5em;
+  font-size: 0.45em;
   border-radius: 5px;
   width: 90%;
+  margin-top: 0.25em;
 }
 
 .letter {
@@ -67,6 +76,7 @@ section {
   display: flex;
   justify-content: center;
   align-items: start;
+  gap: 1em;
   margin: 1em auto;
 }
 
@@ -74,13 +84,17 @@ section {
   display: flex;
   justify-content: left;
   align-items: center;
-  margin: 0 1em;
+  margin: 0.5em;
   gap: 1em;
   font-size: 0.9em;
   cursor: pointer;
+  text-align: left;
+  background-color: var(--dark-lighten-10);
+  padding: 0.5em;
+  border-radius: 5px;
 
   &:hover {
-    text-decoration: underline;
+    color: var(--light);
   }
 
   &.discovered {
@@ -105,14 +119,14 @@ section {
 @keyframes highlight-blink {
   0% {
     background-color: var(--light);
-    color: var(--dark);
+    color: var(--light-darken-10);
   }
   50% {
-    background-color: var(--dark);
+    background-color: var(--light-darken-10);
     color: var(--light);
   }
   100% {
     background-color: var(--light);
-    color: var(--dark);
+    color: var(--light-darken-10);
   }
 }
