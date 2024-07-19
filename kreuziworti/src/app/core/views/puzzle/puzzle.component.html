@@ -4,9 +4,15 @@
 <ng-container *ngIf="puzzleData">
   <h1>{{ categoryTitle }} {{ puzzleId }}</h1>
   {{ getGameFieldSize().x + 'x' + getGameFieldSize().y + ' Felder' }}
-  <blockquote>
-    W = Waagerecht (➡), S = Senkrecht (⬇), L = Lösungswort
-  </blockquote>
+  <div class="below-title">
+    <blockquote>
+      W = Waagerecht (➡), S = Senkrecht (⬇), L = Lösungswort
+    </blockquote>
+    <div class="joker-usage">
+      <span>Joker verfügbar: {{ numberOfJokersLeft }}</span>
+      <button (click)="useJoker()">Nutzen</button>
+    </div>
+  </div>
   <div class="divider"></div>
   <section>
     <div class="left">

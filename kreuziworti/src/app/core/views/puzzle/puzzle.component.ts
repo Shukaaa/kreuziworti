@@ -24,6 +24,7 @@ export class PuzzleComponent implements OnInit {
   finalLetterLocations: Coordinate[] = [];
   assignedLetters: string[][] = [];
   done: boolean = false;
+  totalNumberOfJokersUsed: number = 0;
 
   constructor(
     private packageStore: PackageStore,
@@ -57,6 +58,7 @@ export class PuzzleComponent implements OnInit {
 
     if (puzzleProgress) {
       this.assignedLetters = puzzleProgress.assignedLetters;
+      this.totalNumberOfJokersUsed = puzzleProgress.jokersUsed;
     } else {
       const gameFieldSize = this.getGameFieldSize();
       this.assignedLetters = Array.from({ length: gameFieldSize.y }, () =>
@@ -153,6 +155,7 @@ export class PuzzleComponent implements OnInit {
 
       gameProgress.categoryProgress[gameProgress.categoryProgress.length - 1].puzzleProgress.push({
         puzzleId,
+        jokersUsed: this.totalNumberOfJokersUsed,
         done: false,
         assignedLetters: this.assignedLetters
       });
@@ -163,10 +166,12 @@ export class PuzzleComponent implements OnInit {
         gameProgress.categoryProgress[categoryProgressIndex].puzzleProgress.push({
           puzzleId,
           done: false,
+          jokersUsed: this.totalNumberOfJokersUsed,
           assignedLetters: this.assignedLetters
         });
       } else {
         gameProgress.categoryProgress[categoryProgressIndex].puzzleProgress[puzzleProgressIndex].assignedLetters = this.assignedLetters;
+        gameProgress.categoryProgress[categoryProgressIndex].puzzleProgress[puzzleProgressIndex].jokersUsed = this.totalNumberOfJokersUsed;
 
         if (gameProgress.categoryProgress[categoryProgressIndex].puzzleProgress[puzzleProgressIndex].done) {
           this.done = true;
@@ -345,5 +350,57 @@ export class PuzzleComponent implements OnInit {
 
   getFinalWordLetterCoordinates(index: number): Coordinate {
     return this.finalLetterLocations[index];
+  }
+
+  totalWordsSuccessfullyDiscovered(): number {
+    const totalHorizontalWords = this.puzzleData?.horizontal
+      .filter(word => this.isWordDiscovered(word, true)).length || 0;
+    const totalVerticalWords = this.puzzleData?.vertical
+      .filter(word => this.isWordDiscovered(word, false)).length || 0;
+
+    return totalHorizontalWords + totalVerticalWords;
+  }
+
+  canUseJoker(): boolean {
+    return this.totalNumberOfJokersUsed < this.totalWordsSuccessfullyDiscovered();
+  }
+
+  get numberOfJokersLeft(): number {
+    return this.totalWordsSuccessfullyDiscovered() - this.totalNumberOfJokersUsed;
+  }
+
+  useJoker(): void {
+    const feedback = confirm("Möchtest du wirklich einen Joker verwenden? Dieser deckt ein Buchstabe in einen von dir ausgewählten Bereich auf. (Gilt nicht für Lösungswort-Buchstaben)");
+
+    if (!this.canUseJoker()) {
+      alert("Du hast keine Joker!!!!");
+      return;
+    }
+
+    if (feedback) {
+      if (this.selectedField) {
+        if (
+          this.finalLetterLocations
+            .some(location => location.x === this.selectedField?.x && location.y === this.selectedField?.y)
+        ) {
+          alert("Du kannst keine Joker für das Lösungswort verwenden.");
+          return;
+        }
+
+        // get the correct letter on the selected field position
+        const correctLetter = this.puzzleData?.horizontal
+          .find(word => word.startPoint.y === this.selectedField?.y && this.selectedField.x >= word.startPoint.x && this.selectedField.x <= word.endPoint.x)
+          ?.word[this.selectedField.x - 1] || this.puzzleData?.vertical
+          .find(word => word.startPoint.x === this.selectedField?.x && this.selectedField.y >= word.startPoint.y && this.selectedField.y <= word.endPoint.y)
+          ?.word[this.selectedField.y - 1];
+
+        if (correctLetter) {
+          this.totalNumberOfJokersUsed++;
+          this.setLetter(this.selectedField.x, this.selectedField.y, correctLetter);
+        }
+      } else {
+        alert("Bitte wähle ein Feld aus, um einen Joker zu verwenden.");
+      }
+    }
   }
 }

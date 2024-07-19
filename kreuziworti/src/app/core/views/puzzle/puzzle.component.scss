@@ -7,6 +7,22 @@
   user-select: none;
 }
 
+.below-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1em;
+
+  font-size: 0.8em;
+}
+
+.joker-usage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+}
+
 .left {
   font-size: 0.8em;
 

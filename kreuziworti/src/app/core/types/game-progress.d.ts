@@ -9,6 +9,7 @@ export type CategoryProgress = {
 
 export type PuzzleProgress = {
   puzzleId: string;
+  jokersUsed: number;
   done: boolean;
   assignedLetters: string[][];
 }
