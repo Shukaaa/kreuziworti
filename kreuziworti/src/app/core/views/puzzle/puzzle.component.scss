@@ -5,6 +5,9 @@
   width: fit-content;
   background-color: var(--dark);
   user-select: none;
+
+  height: 75vh;
+  overflow-y: scroll;
 }
 
 .below-title {

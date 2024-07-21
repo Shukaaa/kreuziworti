@@ -59,7 +59,6 @@
     <div class="game-field"
          [style.grid-template-columns]="'repeat(' + getGameFieldSize().x + ', 1fr)'"
          [style.grid-template-rows]="'repeat(' + getGameFieldSize().y + ', 1fr)'"
-         [style.height]="getGameFieldSize().y * 75 + 'px'"
     >
       <div class="row" *ngFor="let _ of getArray(getGameFieldSize().x); let x = index">
         <div *ngFor="let __ of getArray(getGameFieldSize().y); let y = index"

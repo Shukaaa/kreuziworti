@@ -1,5 +1,6 @@
 import {Injectable} from "@angular/core";
 import {GameProgress} from "../types/game-progress";
+import {AudioSettings} from "../types/auto-settings";
 
 @Injectable()
 export class LocalStorageStore {
@@ -20,5 +21,14 @@ export class LocalStorageStore {
 
   getTheme(): string | null {
     return localStorage.getItem(this.prefix+'theme');
+  }
+
+  setAudioSettings(audioSettings: AudioSettings) {
+    localStorage.setItem(this.prefix+'audioSettings', JSON.stringify(audioSettings));
+  }
+
+  getAudioSettings(): AudioSettings {
+    const audioSettings = localStorage.getItem(this.prefix+'audioSettings');
+    return audioSettings ? JSON.parse(audioSettings) : {sfxVolume: 1};
   }
 }

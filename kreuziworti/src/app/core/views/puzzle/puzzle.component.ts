@@ -5,6 +5,7 @@ import {CrosswordCategory, CrosswordPuzzle, CrosswordWord} from "../../types/cro
 import {NgForOf, NgIf} from "@angular/common";
 import {Coordinate} from "../../types/coordinate";
 import {LocalStorageStore} from "../../stores/local-storage.store";
+import {AudioPlayerService} from "../../services/audio-player.service";
 
 @Component({
   selector: 'app-puzzle',
@@ -25,12 +26,14 @@ export class PuzzleComponent implements OnInit {
   assignedLetters: string[][] = [];
   done: boolean = false;
   totalNumberOfJokersUsed: number = 0;
+  wordFirstDiscoveryMap: Map<string, boolean> = new Map();
 
   constructor(
     private packageStore: PackageStore,
     private route: ActivatedRoute,
     private gameProgressStore: LocalStorageStore,
-    private router: Router
+    private router: Router,
+    private audioPlayerService: AudioPlayerService
   ) {
   }
 
@@ -45,6 +48,7 @@ export class PuzzleComponent implements OnInit {
 
     this.setupPuzzle(categoryId);
     this.initializeKeyListeners();
+    this.audioPlayerService.preloadAudios();
   }
 
   setupPuzzle(categoryId: string): void {
@@ -98,18 +102,22 @@ export class PuzzleComponent implements OnInit {
     document.addEventListener('keydown', (event) => {
       if (event.key === "Escape") {
         this.selectedField = null;
+        this.audioPlayerService.playClick();
       }
 
       if (event.key === "Backspace" || event.key === "Delete") {
         this.recognizeLetter("x");
+        this.audioPlayerService.playRemove();
       }
 
       if (event.key.length === 1) {
         this.recognizeLetter(event.key.toUpperCase());
+        this.audioPlayerService.playClick();
       }
 
       if (event.key === "ArrowUp" && this.selectedField) {
         const newY = this.selectedField.y - 1;
+        this.audioPlayerService.playWhoosh();
 
         if (this.isLetterField(this.selectedField.x, newY)) {
           this.selectedField.y = newY;
@@ -118,6 +126,7 @@ export class PuzzleComponent implements OnInit {
 
       if (event.key === "ArrowDown" && this.selectedField) {
         const newY = this.selectedField.y + 1;
+        this.audioPlayerService.playWhoosh();
 
         if (this.isLetterField(this.selectedField.x, newY)) {
           this.selectedField.y = newY;
@@ -126,6 +135,7 @@ export class PuzzleComponent implements OnInit {
 
       if (event.key === "ArrowLeft" && this.selectedField) {
         const newX = this.selectedField.x - 1;
+        this.audioPlayerService.playWhoosh();
 
         if (this.isLetterField(newX, this.selectedField.y)) {
           this.selectedField.x = newX;
@@ -134,6 +144,7 @@ export class PuzzleComponent implements OnInit {
 
       if (event.key === "ArrowRight" && this.selectedField) {
         const newX = this.selectedField.x + 1;
+        this.audioPlayerService.playWhoosh();
 
         if (this.isLetterField(newX, this.selectedField.y)) {
           this.selectedField.x = newX;
@@ -200,6 +211,14 @@ export class PuzzleComponent implements OnInit {
         return false;
       }
     }
+
+    if (this.wordFirstDiscoveryMap.has(word.word)) {
+      return true;
+    }
+
+    // First time discovering the word
+    this.wordFirstDiscoveryMap.set(word.word, true);
+    this.audioPlayerService.playWordFound();
 
     return true;
   }
@@ -303,7 +322,9 @@ export class PuzzleComponent implements OnInit {
     if (this.finalWord === this.puzzleData?.finalWord.word.toUpperCase()) {
       this.done = true;
       this.saveProgress();
-      alert("YAAAY! Du hast es gerockt!");
+      this.audioPlayerService.playWin().then(() => {
+        alert("YAAAY!!! Du hast das Rätsel gelöst! :o");
+      });
       this.router.navigate(['/home']);
     } else {
       this.done = false;
@@ -373,7 +394,7 @@ export class PuzzleComponent implements OnInit {
     const feedback = confirm("Möchtest du wirklich einen Joker verwenden? Dieser deckt ein Buchstabe in einen von dir ausgewählten Bereich auf. (Gilt nicht für Lösungswort-Buchstaben)");
 
     if (!this.canUseJoker()) {
-      alert("Du hast keine Joker!!!!");
+      alert("Du hast keine Joker! Du Strolch!");
       return;
     }
 
@@ -383,18 +404,20 @@ export class PuzzleComponent implements OnInit {
           this.finalLetterLocations
             .some(location => location.x === this.selectedField?.x && location.y === this.selectedField?.y)
         ) {
-          alert("Du kannst keine Joker für das Lösungswort verwenden.");
+          alert("Du denkst du bist schlau, was? Aber nein, du kannst keine Joker für die Buchstaben des Lösungswortes verwenden!");
           return;
         }
 
-        // get the correct letter on the selected field position
-        const correctLetter = this.puzzleData?.horizontal
-          .find(word => word.startPoint.y === this.selectedField?.y && this.selectedField.x >= word.startPoint.x && this.selectedField.x <= word.endPoint.x)
-          ?.word[this.selectedField.x - 1] || this.puzzleData?.vertical
-          .find(word => word.startPoint.x === this.selectedField?.x && this.selectedField.y >= word.startPoint.y && this.selectedField.y <= word.endPoint.y)
-          ?.word[this.selectedField.y - 1];
+        // get any word that contains the selected field
+        const wordWithSelectedField = this.puzzleData?.horizontal.find(({ startPoint, endPoint }) => {
+          return startPoint.y === this.selectedField?.y && startPoint.x <= this.selectedField?.x && endPoint.x >= this.selectedField.x;
+        }) || this.puzzleData?.vertical.find(({ startPoint, endPoint }) => {
+          return startPoint.x === this.selectedField?.x && startPoint.y <= this.selectedField?.y && endPoint.y >= this.selectedField.y;
+        });
+        const correctLetter = wordWithSelectedField?.word[this.selectedField.x - wordWithSelectedField.startPoint.x].toUpperCase();
 
         if (correctLetter) {
+          this.audioPlayerService.playJokerFound();
           this.totalNumberOfJokersUsed++;
           this.setLetter(this.selectedField.x, this.selectedField.y, correctLetter);
         }

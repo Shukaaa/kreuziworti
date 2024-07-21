@@ -98,3 +98,35 @@ nav {
   gap: 1em;
   margin-top: 1em;
 }
+
+input[type="range"] {
+  margin: 1em 0;
+  cursor: pointer;
+  background: transparent;
+
+  &::-webkit-slider-thumb {
+    background: var(--light);
+    border-radius: 50%;
+    cursor: pointer;
+    width: 1em;
+    height: 1em;
+  }
+
+  &::-webkit-slider-runnable-track {
+    background: var(--light);
+    height: 0.5em;
+  }
+
+  &::-moz-range-thumb {
+    background: var(--light);
+    cursor: pointer;
+    width: 1em;
+    height: 1em;
+  }
+
+  &::-moz-range-track {
+    background: var(--light);
+    border: transparent;
+    height: 0.5em;
+  }
+}
