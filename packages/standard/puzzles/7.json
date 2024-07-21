@@ -1,0 +1,187 @@
+{
+  "horizontal": [
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 1
+      },
+      "word": "TäTOWIERER",
+      "description": "Künstler für Hautbilder"
+    },
+    {
+      "startPoint": {
+        "x": 5,
+        "y": 2
+      },
+      "word": "EH",
+      "description": "Zögerndes Füllwort"
+    },
+    {
+      "startPoint": {
+        "x": 5,
+        "y": 3
+      },
+      "word": "BK",
+      "description": "Abkürzung einer Burgerkette"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 4
+      },
+      "word": "ENTE",
+      "description": "Wasservogel"
+    },
+    {
+      "startPoint": {
+        "x": 7,
+        "y": 4
+      },
+      "word": "ABRI",
+      "description": "Ein durch Erosion entstandener Felsüberhang"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 7
+      },
+      "word": "CAFE",
+      "description": "Ort zum Kaffee trinken"
+    },
+    {
+      "startPoint": {
+        "x": 7,
+        "y": 7
+      },
+      "word": "KARO",
+      "description": "Spielfarbe beim Kartenspiel"
+    },
+    {
+      "startPoint": {
+        "x": 5,
+        "y": 8
+      },
+      "word": "CC",
+      "description": "Kenntnisnehmer sind im..."
+    },
+    {
+      "startPoint": {
+        "x": 5,
+        "y": 9
+      },
+      "word": "DH",
+      "description": "Abkürzung für deshalb"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 10
+      },
+      "word": "UMLAUFBAHN",
+      "description": "Bahn eines Himmelskörpers"
+    }
+  ],
+  "vertical": [
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 1
+      },
+      "word": "TAGESSCHAU",
+      "description": "Fernsehnachrichten der ARD"
+    },
+    {
+      "startPoint": {
+        "x": 3,
+        "y": 1
+      },
+      "word": "TAKTGEFüHL",
+      "description": "Fähigkeit, Rhythmus zu spüren"
+    },
+    {
+      "startPoint": {
+        "x": 5,
+        "y": 1
+      },
+      "word": "WEB",
+      "description": "Netzwerk zum Surfen"
+    },
+    {
+      "startPoint": {
+        "x": 6,
+        "y": 1
+      },
+      "word": "IHK",
+      "description": "Handelskammer für Unternehmen"
+    },
+    {
+      "startPoint": {
+        "x": 8,
+        "y": 1
+      },
+      "word": "RAMBAZAMBA",
+      "description": "Lautes, ausgelassenes Treiben"
+    },
+    {
+      "startPoint": {
+        "x": 10,
+        "y": 1
+      },
+      "word": "RADIOLOGIN",
+      "description": "Fachärztin für Röntgen"
+    },
+    {
+      "startPoint": {
+        "x": 5,
+        "y": 8
+      },
+      "word": "CDU",
+      "description": "Partei der deutschen Politik"
+    },
+    {
+      "startPoint": {
+        "x": 6,
+        "y": 8
+      },
+      "word": "CHF",
+      "description": "Währung der Schweiz"
+    }
+  ],
+  "finalWord": {
+    "word": "BäCKEREI",
+    "letters": [
+      {
+        "word": "RAMBAZAMBA",
+        "letterPos": 9
+      },
+      {
+        "word": "TäTOWIERER",
+        "letterPos": 2
+      },
+      {
+        "word": "CC",
+        "letterPos": 2
+      },
+      {
+        "word": "TAKTGEFüHL",
+        "letterPos": 3
+      },
+      {
+        "word": "CAFE",
+        "letterPos": 4
+      },
+      {
+        "word": "ABRI",
+        "letterPos": 3
+      },
+      {
+        "word": "EH",
+        "letterPos": 1
+      },
+      {
+        "word": "RADIOLOGIN",
+        "letterPos": 9
+      }
+    ]
+  }
+}
