@@ -382,12 +382,13 @@ export class PuzzleComponent implements OnInit {
     return totalHorizontalWords + totalVerticalWords;
   }
 
+
   canUseJoker(): boolean {
-    return this.totalNumberOfJokersUsed < this.totalWordsSuccessfullyDiscovered();
+    return this.totalNumberOfJokersUsed < (this.totalWordsSuccessfullyDiscovered()/3);
   }
 
   get numberOfJokersLeft(): number {
-    return this.totalWordsSuccessfullyDiscovered() - this.totalNumberOfJokersUsed;
+    return Math.floor((this.totalWordsSuccessfullyDiscovered()/3) - this.totalNumberOfJokersUsed);
   }
 
   useJoker(): void {
@@ -408,13 +409,15 @@ export class PuzzleComponent implements OnInit {
           return;
         }
 
-        // get any word that contains the selected field
-        const wordWithSelectedField = this.puzzleData?.horizontal.find(({ startPoint, endPoint }) => {
+        const correctWordHorizontal = this.puzzleData?.horizontal.find(({ startPoint, endPoint }) => {
           return startPoint.y === this.selectedField?.y && startPoint.x <= this.selectedField?.x && endPoint.x >= this.selectedField.x;
-        }) || this.puzzleData?.vertical.find(({ startPoint, endPoint }) => {
+        })
+        const correctWordVertical = this.puzzleData?.vertical.find(({ startPoint, endPoint }) => {
           return startPoint.x === this.selectedField?.x && startPoint.y <= this.selectedField?.y && endPoint.y >= this.selectedField.y;
         });
-        const correctLetter = wordWithSelectedField?.word[this.selectedField.x - wordWithSelectedField.startPoint.x].toUpperCase();
+        const correctLetter =
+          correctWordHorizontal?.word[this.selectedField.x - correctWordHorizontal.startPoint.x] ||
+          correctWordVertical?.word[this.selectedField.y - correctWordVertical.startPoint.y];
 
         if (correctLetter) {
           this.audioPlayerService.playJokerFound();
