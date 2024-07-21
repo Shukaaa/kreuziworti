@@ -20,8 +20,8 @@
       <h3>{{ category.title }}</h3>
       <span>{{ category.description }}</span>
       <div class="puzzle">
-        <button [routerLink]="['/puzzle', category.id, i+1]" *ngFor="let _ of category.puzzles; index as i" [classList]="getButtonClassList(category.id, i+1)">
-          {{ i+1 }}
+        <button [routerLink]="['/puzzle', category.id, puzzle.id]" *ngFor="let puzzle of category.puzzles" [classList]="getButtonClassList(category.id, puzzle.id)">
+          {{ puzzle.id }}
         </button>
       </div>
       <div class="divider"></div>

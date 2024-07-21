@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  getButtonClassList(categoryId: string, puzzleId: number) {
+  getButtonClassList(categoryId: string, puzzleId: string) {
     const gameProgress = this.localStorageStore.getGameProgress()
     const categoryProgress = gameProgress.categoryProgress.find(categoryProgress => categoryProgress.categoryId === categoryId)
 
@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
       return ''
     }
 
-    const puzzleProgress = categoryProgress.puzzleProgress.find(puzzleProgress => puzzleProgress.puzzleId === puzzleId.toString())
+    const puzzleProgress = categoryProgress.puzzleProgress.find(puzzleProgress => puzzleProgress.puzzleId === puzzleId)
 
     if (!puzzleProgress) {
       return ''

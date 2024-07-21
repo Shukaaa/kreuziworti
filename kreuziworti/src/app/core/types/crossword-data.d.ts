@@ -9,6 +9,7 @@ export type CrosswordCategory = {
 }
 
 export type CrosswordPuzzle = {
+  id: string;
   horizontal: CrosswordWord[];
   vertical: CrosswordWord[];
   finalWord: CrosswordFinalWord

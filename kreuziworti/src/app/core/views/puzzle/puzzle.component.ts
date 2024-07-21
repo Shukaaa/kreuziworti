@@ -42,7 +42,13 @@ export class PuzzleComponent implements OnInit {
     const puzzleId = this.route.snapshot.params['puzzleId'];
     const category: CrosswordCategory = await this.packageStore.getPackagesByCategoryId(categoryId);
 
-    this.puzzleData = category.puzzles[parseInt(puzzleId) - 1];
+    this.puzzleData = category.puzzles.find(puzzle => puzzle.id === puzzleId) || null;
+
+    if (!this.puzzleData) {
+      alert("Das Rätsel konnte nicht gefunden werden. :(");
+      this.router.navigate(['/home']);
+    }
+
     this.categoryTitle = category.title;
     this.puzzleId = puzzleId;
 
