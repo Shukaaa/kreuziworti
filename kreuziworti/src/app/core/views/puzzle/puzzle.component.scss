@@ -14,7 +14,7 @@ $game-field-width: 75px;
 
   // The variable --game-field-size-x & --game-field-size-y is set in the ngOnInit method of the component
   width: calc(var(--game-field-size-x) * #{$game-field-width});
-  height: calc(var(--game-field-size-y) * #{$game-field-width});
+  height: 75vh;
 }
 
 .below-title {
@@ -123,6 +123,7 @@ section {
   background-color: var(--dark-lighten-10);
   padding: 0.5em;
   border-radius: 5px;
+  width: 100%;
 
   &:hover {
     color: var(--light);
@@ -159,5 +160,21 @@ section {
   100% {
     background-color: var(--light);
     color: var(--light-darken-10);
+  }
+}
+
+#keyboard {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  gap: 0.5em;
+  margin: 0.5em auto;
+  width: 100%;
+  flex-wrap: wrap;
+  display: none;
+
+  &.show {
+    display: flex;
   }
 }

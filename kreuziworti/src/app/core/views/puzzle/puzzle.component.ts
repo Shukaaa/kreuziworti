@@ -111,6 +111,7 @@ export class PuzzleComponent implements OnInit {
     document.addEventListener('keydown', (event) => {
       if (event.key === "Escape") {
         this.selectedField = null;
+        this.toggleKeyboardWhenMobileDetected('off');
         this.audioPlayerService.playClick();
       }
 
@@ -300,6 +301,42 @@ export class PuzzleComponent implements OnInit {
   selectField(x: number, y: number): void {
     if (this.isLetterField(x, y)) {
       this.selectedField = {x, y};
+      this.toggleKeyboardWhenMobileDetected('on');
+    }
+  }
+
+  toggleKeyboardWhenMobileDetected(mode: 'on' | 'off' | null = null): void {
+    function detectMobile() {
+      const toMatch = [
+        /Android/i,
+        /webOS/i,
+        /iPhone/i,
+        /iPad/i,
+        /iPod/i,
+        /BlackBerry/i,
+        /Windows Phone/i
+      ];
+
+      return toMatch.some((toMatchItem) => {
+        return navigator.userAgent.match(toMatchItem);
+      });
+    }
+
+    if (detectMobile()) {
+      const keyboard = document.getElementById('keyboard');
+      if (keyboard) {
+        if (mode === 'on') {
+          keyboard.classList.add('show');
+          return;
+        }
+
+        if (mode === 'off') {
+          keyboard.classList.remove('show');
+          return;
+        }
+
+        keyboard.classList.toggle('show');
+      }
     }
   }
 
