@@ -79,4 +79,8 @@ export class HomeComponent implements OnInit {
       hamsti.src = 'assets/hamsti_diamond.webp'
     }, 2000)
   }
+
+  urlEncode(str: string) {
+    return encodeURIComponent(str)
+  }
 }

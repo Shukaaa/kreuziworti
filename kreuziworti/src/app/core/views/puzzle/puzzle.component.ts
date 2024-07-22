@@ -38,8 +38,8 @@ export class PuzzleComponent implements OnInit {
   }
 
   async ngOnInit() {
-    const categoryId = this.route.snapshot.params['categoryId'];
-    const puzzleId = this.route.snapshot.params['puzzleId'];
+    const categoryId = decodeURI(this.route.snapshot.params['categoryId']);
+    const puzzleId = decodeURI(this.route.snapshot.params['puzzleId']);
     const category: CrosswordCategory = await this.packageStore.getPackagesByCategoryId(categoryId);
 
     this.puzzleData = category.puzzles.find(puzzle => puzzle.id === puzzleId) || null;

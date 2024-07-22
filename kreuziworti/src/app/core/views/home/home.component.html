@@ -20,7 +20,9 @@
       <h3>{{ category.title }}</h3>
       <span>{{ category.description }}</span>
       <div class="puzzle">
-        <button [routerLink]="['/puzzle', category.id, puzzle.id]" *ngFor="let puzzle of category.puzzles" [classList]="getButtonClassList(category.id, puzzle.id)">
+        <button [routerLink]="['/puzzle', urlEncode(category.id), urlEncode(puzzle.id)]"
+                *ngFor="let puzzle of category.puzzles"
+                [classList]="getButtonClassList(category.id, puzzle.id)">
           {{ puzzle.id }}
         </button>
       </div>
