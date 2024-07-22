@@ -20,6 +20,14 @@ export class SettingsComponent implements OnInit {
     const sfxVolumeSlider = document.getElementById('sfx-volume') as HTMLInputElement;
     sfxVolumeSlider.value = String(this.localStorageStore.getAudioSettings().sfxVolume*100);
     sfxVolumeSlider.addEventListener('input', this.changeSfxVolume.bind(this));
+
+    const scanlinesCheckbox = document.getElementById('scanlines') as HTMLInputElement;
+    scanlinesCheckbox.checked = this.localStorageStore.getGraphicSettings().enableScanlines;
+    scanlinesCheckbox.addEventListener('change', this.changeScanlines.bind(this));
+
+    const noiseCheckbox = document.getElementById('noise') as HTMLInputElement;
+    noiseCheckbox.checked = this.localStorageStore.getGraphicSettings().enableNoise;
+    noiseCheckbox.addEventListener('change', this.changeNoise.bind(this));
   }
 
   resetGameData() {
@@ -34,5 +42,17 @@ export class SettingsComponent implements OnInit {
     audioSettings.sfxVolume = event.target.value/100
     this.localStorageStore.setAudioSettings(audioSettings)
     this.audioPlayerService.updateVolume()
+  }
+
+  changeScanlines(event: any) {
+    const graphicSettings = this.localStorageStore.getGraphicSettings()
+    graphicSettings.enableScanlines = event.target.checked
+    this.localStorageStore.setGraphicSettings(graphicSettings)
+  }
+
+  changeNoise(event: any) {
+    const graphicSettings = this.localStorageStore.getGraphicSettings()
+    graphicSettings.enableNoise = event.target.checked
+    this.localStorageStore.setGraphicSettings(graphicSettings)
   }
 }

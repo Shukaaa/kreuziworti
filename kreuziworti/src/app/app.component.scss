@@ -11,17 +11,21 @@ main {
   }
 }
 
-.scanlines {
+@mixin fullScreenEffect($z-index: 1, $opacity: 1, $animation: none) {
   position: fixed;
   left: 0;
   top: 0;
   width: 1000vw;
   height: 1000vh;
   pointer-events: none;
-  z-index: 300;
-  opacity: .6;
+  z-index: $z-index;
+  opacity: $opacity;
   will-change: opacity;
-  animation: opacity 3s linear infinite;
+  animation: $animation;
+}
+
+.scanlines {
+  @include fullScreenEffect(300, .6, opacity 3s linear infinite);
 
   &:before {
     content: '';
@@ -38,6 +42,23 @@ main {
   }
 }
 
+.noise {
+  @include fullScreenEffect(400, .01, opacity 6s linear infinite);
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background: url('../assets/vhs-noise-map.jpg');
+    will-change: background;
+    animation: vhs-background 20s linear infinite;
+  }
+}
+
 @keyframes scanlines {
   from {
     background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, .2) 51%);
@@ -46,5 +67,14 @@ main {
   to {
     background: linear-gradient(to bottom, rgba(0, 0, 0, .2) 50%, transparent 51%);
     background-size: 100% 4px;
+  }
+}
+
+@keyframes vhs-background {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 100%;
   }
 }

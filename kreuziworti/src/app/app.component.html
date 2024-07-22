@@ -1,4 +1,5 @@
 <main>
   <router-outlet></router-outlet>
 </main>
-<div class="scanlines"></div>
+<div class="scanlines" *ngIf="isScanlinesEnabled()"></div>
+<div class="noise" *ngIf="isNoiseEnabled()"></div>

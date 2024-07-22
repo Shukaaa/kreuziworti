@@ -1,12 +1,30 @@
 <h1>Einstellungen</h1>
 <div class="divider"></div>
+
+<h3>Grafik</h3>
+<div class="input-label">
+  <label for="scanlines">Scanlines</label>
+  <input type="checkbox" id="scanlines"/>
+</div>
+<div class="input-label">
+  <label for="noise">Noise</label><br/>
+  <input type="checkbox" id="noise"/>
+</div>
+<div class="divider"></div>
+
 <h3>Audio</h3>
-<input type="range" min="0" max="100" step="1" id="sfx-volume"/>
+<div class="input-label">
+  <label for="sfx-volume">Soundeffekte Lautstärke</label>
+  <input type="range" min="0" max="100" step="1" id="sfx-volume"/>
+</div>
+<div class="divider"></div>
+
 <h3>Themes</h3>
 Auf der Seite <a [routerLink]="['/themes']">Theme anpassen</a> kannst du das Aussehen des Spiels anpassen.
-<br/>
-<br/>
+<div class="divider"></div>
+
 <h3>Spielstände zurücksetzen</h3>
 <button (click)="resetGameData()">Zurücksetzen</button>
 <div class="divider"></div>
+
 Zurück zur <a [routerLink]="['/']">Startseite</a>

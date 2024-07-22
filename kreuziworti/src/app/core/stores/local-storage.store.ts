@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {GameProgress} from "../types/game-progress";
-import {AudioSettings} from "../types/auto-settings";
+import {AudioSettings} from "../types/audio-settings";
+import {GraphicSettings} from "../types/graphic-settings";
 
 @Injectable()
 export class LocalStorageStore {
@@ -30,5 +31,14 @@ export class LocalStorageStore {
   getAudioSettings(): AudioSettings {
     const audioSettings = localStorage.getItem(this.prefix+'audioSettings');
     return audioSettings ? JSON.parse(audioSettings) : {sfxVolume: 1};
+  }
+
+  setGraphicSettings(graphicSettings: GraphicSettings) {
+    localStorage.setItem(this.prefix+'graphicSettings', JSON.stringify(graphicSettings));
+  }
+
+  getGraphicSettings(): GraphicSettings {
+    const graphicSettings = localStorage.getItem(this.prefix+'graphicSettings');
+    return graphicSettings ? JSON.parse(graphicSettings) : {enableScanlines: true, enableNoise: true};
   }
 }
