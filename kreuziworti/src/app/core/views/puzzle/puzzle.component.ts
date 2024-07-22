@@ -19,9 +19,11 @@ import {AudioPlayerService} from "../../services/audio-player.service";
   styleUrl: './puzzle.component.scss'
 })
 export class PuzzleComponent implements OnInit {
+  categoryId: string | null = null;
+  puzzleId: string | null = null;
+
   puzzleData: CrosswordPuzzle | null = null;
   categoryTitle: string | null = null;
-  puzzleId: string | null = null;
   finalLetterLocations: Coordinate[] = [];
   assignedLetters: string[][] = [];
   done: boolean = false;
@@ -38,11 +40,11 @@ export class PuzzleComponent implements OnInit {
   }
 
   async ngOnInit() {
-    const categoryId = decodeURI(this.route.snapshot.params['categoryId']);
-    const puzzleId = decodeURI(this.route.snapshot.params['puzzleId']);
-    const category: CrosswordCategory = await this.packageStore.getPackagesByCategoryId(categoryId);
+    this.categoryId = decodeURI(this.route.snapshot.params['categoryId']);
+    this.puzzleId = decodeURI(this.route.snapshot.params['puzzleId']);
+    const category: CrosswordCategory = await this.packageStore.getPackagesByCategoryId(this.categoryId);
 
-    this.puzzleData = category.puzzles.find(puzzle => puzzle.id === puzzleId) || null;
+    this.puzzleData = category.puzzles.find(puzzle => puzzle.id === this.puzzleId) || null;
 
     if (!this.puzzleData) {
       alert("Das Rätsel konnte nicht gefunden werden. :(");
@@ -50,9 +52,7 @@ export class PuzzleComponent implements OnInit {
     }
 
     this.categoryTitle = category.title;
-    this.puzzleId = puzzleId;
-
-    this.setupPuzzle(categoryId);
+    this.setupPuzzle(this.categoryId);
     this.initializeKeyListeners();
     this.audioPlayerService.preloadAudios();
 
@@ -62,6 +62,7 @@ export class PuzzleComponent implements OnInit {
 
   setupPuzzle(categoryId: string): void {
     const gameProgress = this.gameProgressStore.getGameProgress();
+    console.log(gameProgress);
     const categoryProgress = gameProgress.categoryProgress.find(
       categoryProgress => categoryProgress.categoryId === categoryId
     );
@@ -164,28 +165,27 @@ export class PuzzleComponent implements OnInit {
   }
 
   saveProgress(): void {
-    const {categoryId, puzzleId} = this.route.snapshot.params;
     const gameProgress = this.gameProgressStore.getGameProgress();
-    const categoryProgressIndex = gameProgress.categoryProgress.findIndex(categoryProgress => categoryProgress.categoryId === categoryId);
+    const categoryProgressIndex = gameProgress.categoryProgress.findIndex(categoryProgress => categoryProgress.categoryId === this.categoryId);
 
     if (categoryProgressIndex === -1) {
       gameProgress.categoryProgress.push({
-        categoryId,
+        categoryId: this.categoryId || "",
         puzzleProgress: []
       });
 
       gameProgress.categoryProgress[gameProgress.categoryProgress.length - 1].puzzleProgress.push({
-        puzzleId,
+        puzzleId: this.puzzleId || "",
         jokersUsed: this.totalNumberOfJokersUsed,
         done: false,
         assignedLetters: this.assignedLetters
       });
     } else {
-      const puzzleProgressIndex = gameProgress.categoryProgress[categoryProgressIndex].puzzleProgress.findIndex(puzzleProgress => puzzleProgress.puzzleId === puzzleId);
+      const puzzleProgressIndex = gameProgress.categoryProgress[categoryProgressIndex].puzzleProgress.findIndex(puzzleProgress => puzzleProgress.puzzleId === this.puzzleId);
 
       if (puzzleProgressIndex === -1) {
         gameProgress.categoryProgress[categoryProgressIndex].puzzleProgress.push({
-          puzzleId,
+          puzzleId: this.puzzleId || "",
           done: false,
           jokersUsed: this.totalNumberOfJokersUsed,
           assignedLetters: this.assignedLetters
