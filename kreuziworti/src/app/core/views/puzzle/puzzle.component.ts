@@ -430,11 +430,11 @@ export class PuzzleComponent implements OnInit {
 
 
   canUseJoker(): boolean {
-    return this.totalNumberOfJokersUsed < (this.totalWordsSuccessfullyDiscovered()/3);
+    return this.totalNumberOfJokersUsed < (this.totalWordsSuccessfullyDiscovered()/2);
   }
 
   get numberOfJokersLeft(): number {
-    return Math.floor((this.totalWordsSuccessfullyDiscovered()/3) - this.totalNumberOfJokersUsed);
+    return Math.floor((this.totalWordsSuccessfullyDiscovered()/2) - this.totalNumberOfJokersUsed);
   }
 
   useJoker(): void {
