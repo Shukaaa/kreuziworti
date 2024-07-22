@@ -55,6 +55,9 @@ export class PuzzleComponent implements OnInit {
     this.setupPuzzle(categoryId);
     this.initializeKeyListeners();
     this.audioPlayerService.preloadAudios();
+
+    document.documentElement.style.setProperty('--game-field-size-x', this.getGameFieldSize().x.toString());
+    document.documentElement.style.setProperty('--game-field-size-y', this.getGameFieldSize().y.toString());
   }
 
   setupPuzzle(categoryId: string): void {

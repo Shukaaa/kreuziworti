@@ -1,13 +1,20 @@
+$game-field-width: 75px;
+
 .game-field {
   margin: 1em auto;
 
   display: grid;
-  width: fit-content;
   background-color: var(--dark);
   user-select: none;
+  overflow: auto;
 
-  height: 75vh;
-  overflow-y: scroll;
+  @media (max-width: 700px) {
+    width: 100%;
+  }
+
+  // The variable --game-field-size-x & --game-field-size-y is set in the ngOnInit method of the component
+  width: calc(var(--game-field-size-x) * #{$game-field-width});
+  height: calc(var(--game-field-size-y) * #{$game-field-width});
 }
 
 .below-title {
@@ -15,6 +22,7 @@
   justify-content: space-between;
   align-items: center;
   margin: 1em;
+  flex-wrap: wrap;
 
   font-size: 0.8em;
 }
@@ -35,8 +43,8 @@
 }
 
 .cell {
-  width: 75px;
-  height: 75px;
+  width: $game-field-width;
+  height: $game-field-width;
 
   display: grid;
   grid-template-columns: 1fr;
@@ -97,6 +105,10 @@ section {
   align-items: start;
   gap: 1em;
   margin: 1em auto;
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+  }
 }
 
 .word-hint {
