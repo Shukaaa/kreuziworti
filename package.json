@@ -1,5 +1,8 @@
 {
+  "scripts": {
+    "build:packages": "node build-packages.js"
+  },
   "devDependencies": {
-    "@angular/cli": "^17.3.8"
+    "jsonminify": "^0.4.2"
   }
 }

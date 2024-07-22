@@ -1,10 +1,8 @@
 import {Injectable} from "@angular/core";
-import {CrosswordCategory, CrosswordPuzzle, CrosswordWord, PackageList} from "../types/crossword-data";
+import {CrosswordCategory, CrosswordWord, PackageList} from "../types/crossword-data";
 
 @Injectable()
 export class PackageService {
-  packageStorageUrl = 'https://raw.githubusercontent.com/Shukaaa/kreuziworti/master/packages/packages.json';
-
   constructor() { }
 
   get packages(): Promise<CrosswordCategory[]> {
@@ -15,14 +13,10 @@ export class PackageService {
     const availablePackages: PackageList = await this.getAllAvailablePackages();
     const receivedCategories: CrosswordCategory[] = [];
 
-    for (const pkg of availablePackages.packages) {
+    for (const pkg of availablePackages.order) {
       const categoryMetaData: CrosswordCategory = await this.getCategoryMetaData(pkg);
-
-      for (const i of Array.from(Array(categoryMetaData.puzzleAmount).keys())) {
-        const puzzleMetaData: CrosswordPuzzle = await this.getPuzzleMetaData(pkg, i+1);
-
-        // Endpoints are not included in the puzzle metadata, so we need to calculate them
-        puzzleMetaData.horizontal = puzzleMetaData.horizontal.map((word: CrosswordWord) => {
+      categoryMetaData.puzzles.forEach(puzzle => {
+        puzzle.horizontal = puzzle.horizontal.map((word: CrosswordWord) => {
           return {
             word: word.word,
             startPoint: {x: word.startPoint.x, y: word.startPoint.y},
@@ -31,7 +25,7 @@ export class PackageService {
           };
         })
 
-        puzzleMetaData.vertical = puzzleMetaData.vertical.map((word: CrosswordWord) => {
+        puzzle.vertical = puzzle.vertical.map((word: CrosswordWord) => {
           return {
             word: word.word,
             startPoint: {x: word.startPoint.x, y: word.startPoint.y},
@@ -39,10 +33,7 @@ export class PackageService {
             description: word.description
           };
         })
-
-        categoryMetaData.puzzles.push(puzzleMetaData);
-      }
-
+      })
       receivedCategories.push(categoryMetaData);
     }
 
@@ -50,20 +41,13 @@ export class PackageService {
   }
 
   private async getCategoryMetaData(pkg: string): Promise<CrosswordCategory> {
-    const categoryMetaDataUrl = `https://raw.githubusercontent.com/Shukaaa/kreuziworti/master/packages/${pkg}/category.json`;
+    const categoryMetaDataUrl = `https://raw.githubusercontent.com/Shukaaa/kreuziworti/master/packages/${pkg}.json`;
     const categoryMetaDataResponse = await fetch(categoryMetaDataUrl, { cache: 'no-store' });
-    const categoryMetaData = await categoryMetaDataResponse.json();
-    return {...categoryMetaData, puzzles: []};
-  }
-
-  private async getPuzzleMetaData(pkg: string, puzzleNumber: number): Promise<CrosswordPuzzle> {
-    const puzzleMetaDataUrl = `https://raw.githubusercontent.com/Shukaaa/kreuziworti/master/packages/${pkg}/puzzles/${puzzleNumber}.json`;
-    const puzzleMetaDataResponse = await fetch(puzzleMetaDataUrl, { cache: 'no-store' });
-    return await puzzleMetaDataResponse.json();
+    return await categoryMetaDataResponse.json();
   }
 
   private async getAllAvailablePackages(): Promise<PackageList> {
-    const response = await fetch(this.packageStorageUrl, { cache: 'no-store' });
+    const response = await fetch("https://raw.githubusercontent.com/Shukaaa/kreuziworti/master/packages/_categories.json", { cache: 'no-store' });
     return await response.json();
   }
 }

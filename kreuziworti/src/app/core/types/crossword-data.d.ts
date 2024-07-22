@@ -4,7 +4,6 @@ export type CrosswordCategory = {
   id: string;
   title: string;
   description: string;
-  puzzleAmount: number;
   puzzles: CrosswordPuzzle[];
 }
 
@@ -33,5 +32,5 @@ export type CrosswordWord = {
 }
 
 export type PackageList = {
-  packages: string[];
+  order: string[];
 }
