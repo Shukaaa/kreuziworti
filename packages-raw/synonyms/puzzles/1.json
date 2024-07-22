@@ -1,0 +1,188 @@
+{
+  "id": "1",
+  "horizontal": [
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 1
+      },
+      "word": "ABENDSTUNDE",
+      "description": "Abenddämmerung"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 3
+      },
+      "word": "LIDSCHATTEN",
+      "description": "Augen-Make-up"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 5
+      },
+      "word": "UNFAIR",
+      "description": "ungerecht"
+    },
+    {
+      "startPoint": {
+        "x": 8,
+        "y": 5
+      },
+      "word": "AURA",
+      "description": "Ausstrahlung"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 7
+      },
+      "word": "DART",
+      "description": "Wurfpfeil"
+    },
+    {
+      "startPoint": {
+        "x": 6,
+        "y": 7
+      },
+      "word": "LIQUID",
+      "description": "Flüssigkeit"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 9
+      },
+      "word": "TODESGEFAHR",
+      "description": "Lebensbedrohung"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 11
+      },
+      "word": "MAILVERKEHR",
+      "description": "E-Mail-Kommunikation"
+    }
+  ],
+  "vertical": [
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 1
+      },
+      "word": "ABLAUFDATUM",
+      "description": "Haltbarkeitsdatum"
+    },
+    {
+      "startPoint": {
+        "x": 3,
+        "y": 1
+      },
+      "word": "EID",
+      "description": "Schwur"
+    },
+    {
+      "startPoint": {
+        "x": 6,
+        "y": 1
+      },
+      "word": "SPHäROLOGIE",
+      "description": "Kugelwissenschaft"
+    },
+    {
+      "startPoint": {
+        "x": 8,
+        "y": 1
+      },
+      "word": "ULTRA",
+      "description": "extrem"
+    },
+    {
+      "startPoint": {
+        "x": 11,
+        "y": 1
+      },
+      "word": "EINWANDERER",
+      "description": "Immigrant"
+    },
+    {
+      "startPoint": {
+        "x": 3,
+        "y": 5
+      },
+      "word": "FüR",
+      "description": "zugunsten"
+    },
+    {
+      "startPoint": {
+        "x": 9,
+        "y": 5
+      },
+      "word": "UHU",
+      "description": "Eule"
+    },
+    {
+      "startPoint": {
+        "x": 4,
+        "y": 7
+      },
+      "word": "TOEFL",
+      "description": "Englisch-Sprachtest"
+    },
+    {
+      "startPoint": {
+        "x": 9,
+        "y": 9
+      },
+      "word": "AUE",
+      "description": "Talwiese"
+    }
+  ],
+  "finalWord": {
+    "word": "ABSURDITäT",
+    "letters": [
+      {
+        "word": "MAILVERKEHR",
+        "letterPos": 2
+      },
+      {
+        "word": "ABENDSTUNDE",
+        "letterPos": 2
+      },
+      {
+        "word": "LIDSCHATTEN",
+        "letterPos": 4
+      },
+      {
+        "word": "ABLAUFDATUM",
+        "letterPos": 10
+      },
+      {
+        "word": "TODESGEFAHR",
+        "letterPos": 11
+      },
+      {
+        "word": "LIQUID",
+        "letterPos": 6
+      },
+      {
+        "word": "SPHäROLOGIE",
+        "letterPos": 10
+      },
+      {
+        "word": "LIDSCHATTEN",
+        "letterPos": 8
+      },
+      {
+        "word": "SPHäROLOGIE",
+        "letterPos": 4
+      },
+      {
+        "word": "DART",
+        "letterPos": 4
+      }
+    ]
+  }
+}

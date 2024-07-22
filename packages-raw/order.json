@@ -1,6 +1,7 @@
 {
   "order": [
     "standard",
+    "synonyms",
     "games"
   ]
 }
