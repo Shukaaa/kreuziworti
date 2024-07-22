@@ -1,0 +1,148 @@
+{
+  "id": "Valorant Schwer",
+  "horizontal": [
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 2
+      },
+      "word": "SCHWEBEN",
+      "description": "Jett kann"
+    },
+    {
+      "startPoint": {
+        "x": 3,
+        "y": 4
+      },
+      "word": "EINZELSCHUSS",
+      "description": "Classic Modus"
+    },
+    {
+      "startPoint": {
+        "x": 5,
+        "y": 6
+      },
+      "word": "KLON",
+      "description": "Yoru erzeugt einen"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 8
+      },
+      "word": "HAVEN",
+      "description": "Bekannte Map"
+    },
+    {
+      "startPoint": {
+        "x": 6,
+        "y": 11
+      },
+      "word": "GIFTWAND",
+      "description": "Viper kann eine ... erzeugen"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 13
+      },
+      "word": "NEON",
+      "description": "Ist für Movement bekannt"
+    }
+  ],
+  "vertical": [
+    {
+      "startPoint": {
+        "x": 7,
+        "y": 1
+      },
+      "word": "TELEPORTATION",
+      "description": "Omens Fähigkeiten sind"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 2
+      },
+      "word": "SELBSTHEILUNG",
+      "description": "Phoenix im Feuer macht eine"
+    },
+    {
+      "startPoint": {
+        "x": 11,
+        "y": 4
+      },
+      "word": "HEILEN",
+      "description": "Skye kann"
+    },
+    {
+      "startPoint": {
+        "x": 13,
+        "y": 4
+      },
+      "word": "SILBER",
+      "description": "Rang"
+    },
+    {
+      "startPoint": {
+        "x": 10,
+        "y": 10
+      },
+      "word": "ZWEI",
+      "description": "Anzahl: Split Seilrutschen"
+    },
+    {
+      "startPoint": {
+        "x": 3,
+        "y": 12
+      },
+      "word": "KO",
+      "description": "Roboter Agent"
+    }
+  ],
+  "finalWord": {
+    "word": "KILLSTREAK",
+    "letters": [
+      {
+        "word": "KLON",
+        "letterPos": 1
+      },
+      {
+        "word": "SILBER",
+        "letterPos": 2
+      },
+      {
+        "word": "HEILEN",
+        "letterPos": 4
+      },
+      {
+        "word": "TELEPORTATION",
+        "letterPos": 3
+      },
+      {
+        "word": "SELBSTHEILUNG",
+        "letterPos": 5
+      },
+      {
+        "word": "GIFTWAND",
+        "letterPos": 4
+      },
+      {
+        "word": "TELEPORTATION",
+        "letterPos": 7
+      },
+      {
+        "word": "HAVEN",
+        "letterPos": 4
+      },
+      {
+        "word": "GIFTWAND",
+        "letterPos": 6
+      },
+      {
+        "word": "KO",
+        "letterPos": 1
+      }
+    ]
+  }
+}

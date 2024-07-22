@@ -1,0 +1,96 @@
+{
+  "id": "Valorant Einfach",
+  "horizontal": [
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 3
+      },
+      "word": "HEILER",
+      "description": "Sage Rolle"
+    },
+    {
+      "startPoint": {
+        "x": 4,
+        "y": 5
+      },
+      "word": "SCHNEE",
+      "description": "Icebox enthält"
+    },
+    {
+      "startPoint": {
+        "x": 3,
+        "y": 7
+      },
+      "word": "RIOT",
+      "description": "Entwickler von Valorant"
+    }
+  ],
+  "vertical": [
+    {
+      "startPoint": {
+        "x": 2,
+        "y": 1
+      },
+      "word": "DREI",
+      "description": "Anzahl: Haven Spikesites"
+    },
+    {
+      "startPoint": {
+        "x": 4,
+        "y": 2
+      },
+      "word": "CLASSIC",
+      "description": "Standardwaffe"
+    },
+    {
+      "startPoint": {
+        "x": 8,
+        "y": 3
+      },
+      "word": "ZWEI",
+      "description": "Anzahl: Bind Teleporter"
+    }
+  ],
+  "finalWord": {
+    "word": "CROSSHAIR",
+    "letters": [
+      {
+        "word": "SCHNEE",
+        "letterPos": 2
+      },
+      {
+        "word": "HEILER",
+        "letterPos": 6
+      },
+      {
+        "word": "RIOT",
+        "letterPos": 3
+      },
+      {
+        "word": "CLASSIC",
+        "letterPos": 5
+      },
+      {
+        "word": "SCHNEE",
+        "letterPos": 1
+      },
+      {
+        "word": "HEILER",
+        "letterPos": 1
+      },
+      {
+        "word": "CLASSIC",
+        "letterPos": 3
+      },
+      {
+        "word": "DREI",
+        "letterPos": 4
+      },
+      {
+        "word": "DREI",
+        "letterPos": 2
+      }
+    ]
+  }
+}
