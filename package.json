@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "build": "npm run build:packages && cd kreuziworti && npm run build",
     "build:packages": "node build-packages.js"
   },
   "devDependencies": {

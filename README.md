@@ -12,8 +12,8 @@ Dieses Projekt beinhaltet folgende Anwendungen:
 
 - Kreuziworti (Angular 17 App)
   - Webanwendung, die das Kreuzworträtsel darstellt
-- kreuzi-generator (Frameworkless Node.js App)
-  - Node.js-Anwendung, die das Kreuzworträtsel generiert
+- kreuzi-generator (Tampermonkey Script)
+  - Tampermonkey Script welches eine andere Webseite zunutzen macht um eigene schemas zu generieren
 - packages
   - Ein Ordner mit allen Kreuzworträtsel und Lösungen
   - Diese Dateien werden von kreuzi-generator erstellt und von Kreuziworti verwendet
