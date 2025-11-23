@@ -3,6 +3,8 @@ import {CrosswordCategory, CrosswordWord, PackageList} from "../types/crossword-
 
 @Injectable()
 export class PackageService {
+  basePath = "assets/data"
+
   constructor() { }
 
   get packages(): Promise<CrosswordCategory[]> {
@@ -41,13 +43,13 @@ export class PackageService {
   }
 
   private async getCategoryMetaData(pkg: string): Promise<CrosswordCategory> {
-    const categoryMetaDataUrl = `https://raw.githubusercontent.com/Shukaaa/kreuziworti/master/packages/${pkg}.json`;
+    const categoryMetaDataUrl = `${this.basePath}/${pkg}.json`;
     const categoryMetaDataResponse = await fetch(categoryMetaDataUrl, { cache: 'no-store' });
     return await categoryMetaDataResponse.json();
   }
 
   private async getAllAvailablePackages(): Promise<PackageList> {
-    const response = await fetch("https://raw.githubusercontent.com/Shukaaa/kreuziworti/master/packages/_categories.json", { cache: 'no-store' });
+    const response = await fetch(`${this.basePath}/_categories.json`, { cache: 'no-store' });
     return await response.json();
   }
 }

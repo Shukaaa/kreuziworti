@@ -11,3 +11,4 @@ Ein Script für die HTML-Webseite von (Crossword Puzzle Maker)[https://crossword
 5. Es wird ein neues Formular generiert, wo du ein Lösungswort definieren musst
 6. Nachdem du alle Schritte abgeschlossen hast, klicke auf "Export JSON"
 7. Anschließend wurde der Download gestartet und die JSON Config wurde generiert
+8. Am Ende fügst du die JSON Datei in den `packages-raw` Ordner hinzu und added eine "id" Eigenschaft mit einem eindeutigen Namen

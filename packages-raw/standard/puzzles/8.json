@@ -1,0 +1,148 @@
+{
+  "id": "8",
+  "horizontal": [
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 1
+      },
+      "word": "ZEITALTER",
+      "description": "Bezeichnung für ein großes Kapitel der Menschheitsgeschichte"
+    },
+    {
+      "startPoint": {
+        "x": 5,
+        "y": 3
+      },
+      "word": "BON",
+      "description": "Zettel, der den Kauf an der Kasse als Beleg dokumentiert"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 4
+      },
+      "word": "FREYR",
+      "description": "Nordischer Gott der Fruchtbarkeit, des Friedens und des Wohlstands"
+    },
+    {
+      "startPoint": {
+        "x": 7,
+        "y": 4
+      },
+      "word": "SAH",
+      "description": "Präteritum des Verbs für visuelle Wahrnehmung"
+    },
+    {
+      "startPoint": {
+        "x": 5,
+        "y": 6
+      },
+      "word": "CDU",
+      "description": "deutsche Partei"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 7
+      },
+      "word": "UWE",
+      "description": "Männlicher Vorname"
+    },
+    {
+      "startPoint": {
+        "x": 7,
+        "y": 7
+      },
+      "word": "DOC",
+      "description": "Umgangssprachliche Kurzform für Arzt oder Ärztin"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 9
+      },
+      "word": "EHRENWORT",
+      "description": "Versprechen, das man aus Anstand unbedingt halten muss"
+    }
+  ],
+  "vertical": [
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 1
+      },
+      "word": "ZAPFSÄULE",
+      "description": "Gerät an der Tankstelle zum Befüllen von Fahrzeugen"
+    },
+    {
+      "startPoint": {
+        "x": 3,
+        "y": 1
+      },
+      "word": "INGENIEUR",
+      "description": "Fachmann, der technische Lösungen plant und entwickelt"
+    },
+    {
+      "startPoint": {
+        "x": 5,
+        "y": 1
+      },
+      "word": "ABBRECHEN",
+      "description": "Etwas nicht zu Ende führen, sondern stoppen"
+    },
+    {
+      "startPoint": {
+        "x": 7,
+        "y": 1
+      },
+      "word": "TONSTUDIO",
+      "description": "Ort, an dem professionelle Audioaufnahmen entstehen"
+    },
+    {
+      "startPoint": {
+        "x": 9,
+        "y": 1
+      },
+      "word": "RACHSUCHT",
+      "description": "Starkes Verlangen nach Vergeltung"
+    }
+  ],
+  "finalWord": {
+    "word": "REALITÄT",
+    "letters": [
+      {
+        "word": "FREYR",
+        "letterPos": 2
+      },
+      {
+        "word": "EHRENWORT",
+        "letterPos": 4
+      },
+      {
+        "word": "SAH",
+        "letterPos": 2
+      },
+      {
+        "word": "ZEITALTER",
+        "letterPos": 6
+      },
+      {
+        "word": "INGENIEUR",
+        "letterPos": 6
+      },
+      {
+        "word": "EHRENWORT",
+        "letterPos": 9
+      },
+      {
+        "word": "ZAPFSÄULE",
+        "letterPos": 6
+      },
+      {
+        "word": "TONSTUDIO",
+        "letterPos": 5
+      }
+    ]
+  }
+}

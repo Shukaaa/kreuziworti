@@ -3,7 +3,7 @@ const path = require('path');
 require("jsonminify"); // adds JSON.minify
 
 const packagesPath = path.join(__dirname, 'packages-raw');
-const outputJsonPath = path.join(__dirname, 'packages');
+const outputJsonPath = path.join(__dirname, 'kreuziworti', 'src', 'assets', 'data');
 const orderJson = require(path.join(packagesPath, 'order.json'));
 
 fs.readdirSync(outputJsonPath).forEach((file) => {
