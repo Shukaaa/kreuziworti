@@ -1,0 +1,100 @@
+{
+  "id": "2",
+  "horizontal": [
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 1
+      },
+      "word": "FAULHEIT",
+      "description": "Antriebslosigkeit"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 4
+      },
+      "word": "SCHIKANE",
+      "description": "Drangsalierung"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 7
+      },
+      "word": "ROSTFREI",
+      "description": "rostbeständig"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 10
+      },
+      "word": "DEMOKRAT",
+      "description": "Volksvertreter"
+    }
+  ],
+  "vertical": [
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 1
+      },
+      "word": "FROSTBRAND",
+      "description": "Kälteschaden"
+    },
+    {
+      "startPoint": {
+        "x": 8,
+        "y": 1
+      },
+      "word": "TAGESLICHT",
+      "description": "Sonnenlicht"
+    },
+    {
+      "startPoint": {
+        "x": 3,
+        "y": 3
+      },
+      "word": "CHRIST",
+      "description": "Christenanhänger"
+    },
+    {
+      "startPoint": {
+        "x": 6,
+        "y": 3
+      },
+      "word": "MATURA",
+      "description": "Abitur"
+    }
+  ],
+  "finalWord": {
+    "word": "ACTION",
+    "letters": [
+      {
+        "word": "SCHIKANE",
+        "letterPos": 6
+      },
+      {
+        "word": "TAGESLICHT",
+        "letterPos": 8
+      },
+      {
+        "word": "ROSTFREI",
+        "letterPos": 4
+      },
+      {
+        "word": "FAULHEIT",
+        "letterPos": 7
+      },
+      {
+        "word": "DEMOKRAT",
+        "letterPos": 4
+      },
+      {
+        "word": "FROSTBRAND",
+        "letterPos": 9
+      }
+    ]
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "id": "9",
+  "horizontal": [
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 1
+      },
+      "word": "SPIELSUCHT",
+      "description": "Unbeherrschbarer Drang zu spielen"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 3
+      },
+      "word": "BIBEL",
+      "description": "Sammlung religiöser Schriften"
+    },
+    {
+      "startPoint": {
+        "x": 6,
+        "y": 4
+      },
+      "word": "WAFFE",
+      "description": "Gerät zum Verletzen"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 7
+      },
+      "word": "GEBIET",
+      "description": "Klar definierter Landabschnitt"
+    },
+    {
+      "startPoint": {
+        "x": 8,
+        "y": 8
+      },
+      "word": "HUH",
+      "description": "Ausdruck von Unverständnis"
+    },
+    {
+      "startPoint": {
+        "x": 3,
+        "y": 10
+      },
+      "word": "ELTERN",
+      "description": "Erziehungsberechtigte eines Kindes"
+    }
+  ],
+  "vertical": [
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 1
+      },
+      "word": "SABOTAGE",
+      "description": "Gezielte mutwillige Zerstörung"
+    },
+    {
+      "startPoint": {
+        "x": 3,
+        "y": 1
+      },
+      "word": "IMBISSBUDE",
+      "description": "Verkaufsstelle für Schnellgerichte"
+    },
+    {
+      "startPoint": {
+        "x": 8,
+        "y": 1
+      },
+      "word": "CHEFKÖCHIN",
+      "description": "Weibliche Küchenleitung"
+    },
+    {
+      "startPoint": {
+        "x": 10,
+        "y": 1
+      },
+      "word": "TAGEBUCH",
+      "description": "Persönliches schriftliches Erinnerungsbuch"
+    },
+    {
+      "startPoint": {
+        "x": 5,
+        "y": 6
+      },
+      "word": "DEPOT",
+      "description": "Sammelstelle für Güter"
+    }
+  ],
+  "finalWord": {
+    "word": "BEISPIEL",
+    "letters": [
+      {
+        "word": "TAGEBUCH",
+        "letterPos": 5
+      },
+      {
+        "word": "ELTERN",
+        "letterPos": 4
+      },
+      {
+        "word": "CHEFKÖCHIN",
+        "letterPos": 9
+      },
+      {
+        "word": "SPIELSUCHT",
+        "letterPos": 6
+      },
+      {
+        "word": "DEPOT",
+        "letterPos": 3
+      },
+      {
+        "word": "GEBIET",
+        "letterPos": 4
+      },
+      {
+        "word": "SABOTAGE",
+        "letterPos": 8
+      },
+      {
+        "word": "BIBEL",
+        "letterPos": 5
+      }
+    ]
+  }
+}
