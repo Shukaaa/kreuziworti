@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kreuziworti – Rätsel-Generator</title>
+  <style>
+    :root {
+      --bg: #1a1a2e;
+      --surface: #16213e;
+      --surface2: #0f3460;
+      --accent: #e94560;
+      --accent2: #533483;
+      --text: #eee;
+      --text-muted: #aaa;
+      --border: #2a2a4a;
+      --cell-bg: #fff;
+      --cell-text: #1a1a2e;
+      --cell-empty: #2a2a4a;
+      --cell-highlight: #e94560;
+      --cell-solution: #f5c518;
+      --success: #4ecca3;
+      --danger: #e94560;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--surface);
+      border-bottom: 2px solid var(--accent);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header .subtitle {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .layout {
+      display: flex;
+      gap: 24px;
+      padding: 24px;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .panel {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .panel h2 {
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .left-panel {
+      flex: 0 0 380px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
+    }
+
+    .center-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .right-panel {
+      flex: 0 0 340px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
+    }
+
+    /* Grid Settings */
+    .grid-settings {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+    }
+
+    .grid-settings .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .grid-settings label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .grid-settings input {
+      width: 70px;
+    }
+
+    /* Form Elements */
+    input, select, textarea {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 50px;
+    }
+
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #d63050;
+    }
+
+    .btn-secondary {
+      background: var(--surface2);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: var(--accent2);
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: var(--bg);
+    }
+
+    .btn-success:hover {
+      background: #3eb489;
+    }
+
+    .btn-danger {
+      background: transparent;
+      color: var(--danger);
+      border: 1px solid var(--danger);
+      padding: 4px 10px;
+      font-size: 0.8rem;
+    }
+
+    .btn-danger:hover {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-small {
+      padding: 4px 10px;
+      font-size: 0.8rem;
+    }
+
+    /* Word Form */
+    .word-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .word-form .row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .word-form .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .word-form .field label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .word-form .field input,
+    .word-form .field select,
+    .word-form .field textarea {
+      width: 100%;
+    }
+
+    .word-form .actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    /* Word List */
+    .word-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .word-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      transition: border-color 0.2s;
+    }
+
+    .word-item:hover {
+      border-color: var(--accent);
+    }
+
+    .word-item .info {
+      flex: 1;
+    }
+
+    .word-item .word-label {
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .word-item .word-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .word-item .word-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    .direction-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .direction-badge.horizontal {
+      background: var(--surface2);
+      color: #6ec6ff;
+    }
+
+    .direction-badge.vertical {
+      background: var(--accent2);
+      color: #d1a3ff;
+    }
+
+    .word-item .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    /* Grid */
+    .grid-container {
+      position: relative;
+      overflow: auto;
+    }
+
+    .grid {
+      display: inline-grid;
+      gap: 2px;
+      background: var(--border);
+      padding: 2px;
+      border-radius: 8px;
+    }
+
+    .grid-cell {
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      position: relative;
+      border-radius: 3px;
+      cursor: default;
+      user-select: none;
+      transition: all 0.15s;
+    }
+
+    .grid-cell.empty {
+      background: var(--cell-empty);
+    }
+
+    .grid-cell.filled {
+      background: var(--cell-bg);
+      color: var(--cell-text);
+      cursor: pointer;
+    }
+
+    .grid-cell.filled:hover {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
+    }
+
+    .grid-cell.solution-selected {
+      background: var(--cell-solution) !important;
+      color: var(--bg) !important;
+    }
+
+    .grid-cell .cell-number {
+      position: absolute;
+      top: 2px;
+      left: 3px;
+      font-size: 0.55rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .grid-cell.filled .cell-number {
+      color: #666;
+    }
+
+    .grid-cell.solution-selected .cell-number {
+      color: #666;
+    }
+
+    .grid-cell .solution-order {
+      position: absolute;
+      bottom: 1px;
+      right: 3px;
+      font-size: 0.6rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .grid-cell.solution-selected .solution-order {
+      color: var(--bg);
+    }
+
+    /* Solution Word */
+    .solution-display {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 12px;
+      background: var(--bg);
+      border-radius: 8px;
+      border: 2px dashed var(--cell-solution);
+      color: var(--cell-solution);
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .solution-display.empty {
+      font-size: 0.9rem;
+      font-weight: 400;
+      letter-spacing: 0;
+      color: var(--text-muted);
+      border-color: var(--border);
+    }
+
+    .solution-letters {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .solution-letter-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+
+    .solution-letter-item .index {
+      font-weight: 800;
+      color: var(--cell-solution);
+      width: 20px;
+      text-align: center;
+    }
+
+    .solution-letter-item .letter {
+      font-weight: 800;
+      font-size: 1rem;
+      text-transform: uppercase;
+      width: 24px;
+      text-align: center;
+    }
+
+    .solution-letter-item .from-word {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      flex: 1;
+    }
+
+    .solution-letter-item .remove-btn {
+      background: none;
+      border: none;
+      color: var(--danger);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0 4px;
+      opacity: 0.6;
+    }
+
+    .solution-letter-item .remove-btn:hover {
+      opacity: 1;
+    }
+
+    /* Export Area */
+    .export-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .export-section .row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .export-section .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .export-section .field label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      z-index: 1000;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast.success {
+      background: var(--success);
+      color: var(--bg);
+    }
+
+    .toast.error {
+      background: var(--danger);
+      color: white;
+    }
+
+    .toast.info {
+      background: var(--surface2);
+      color: var(--text);
+    }
+
+    /* Mode indicator */
+    .mode-indicator {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .mode-indicator.normal {
+      background: var(--surface2);
+      color: var(--text-muted);
+    }
+
+    .mode-indicator.solution-mode {
+      background: var(--cell-solution);
+      color: var(--bg);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    /* Import section */
+    .import-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .import-section textarea {
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      min-height: 80px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .layout {
+        flex-direction: column;
+      }
+      .left-panel, .right-panel {
+        flex: auto;
+        max-height: none;
+      }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent2); }
+
+    .hint-text {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 8px 0;
+    }
+
+    .conflict-highlight {
+      outline: 2px solid var(--danger) !important;
+      outline-offset: -2px;
+    }
+
+    .grid-wrapper {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .grid-axis-x {
+      display: inline-grid;
+      gap: 2px;
+      padding: 0 2px;
+      margin-left: 26px; /* offset for Y-axis width */
+    }
+
+    .grid-axis-x .axis-label {
+      width: 42px;
+      text-align: center;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      padding-bottom: 3px;
+    }
+
+    .grid-row-wrapper {
+      display: inline-flex;
+      gap: 0;
+    }
+
+    .grid-axis-y {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 2px 0;
+    }
+
+    .grid-axis-y .axis-label {
+      width: 24px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🧩 Kreuziworti Generator</h1>
+  <span class="subtitle">Kreuzworträtsel erstellen &amp; als JSON exportieren</span>
+</header>
+
+<div class="layout">
+  <!-- LEFT PANEL: Word Entry -->
+  <div class="left-panel">
+    <div class="panel">
+      <h2>📐 Gitter-Einstellungen</h2>
+      <div class="grid-settings">
+        <div class="field">
+          <label>Spalten (X)</label>
+          <input type="number" id="gridCols" value="12" min="3" max="30">
+        </div>
+        <div class="field">
+          <label>Zeilen (Y)</label>
+          <input type="number" id="gridRows" value="12" min="3" max="30">
+        </div>
+        <button class="btn-secondary" onclick="resizeGrid()">Anwenden</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>➕ Wort hinzufügen</h2>
+      <div class="word-form">
+        <div class="row">
+          <div class="field">
+            <label>Wort</label>
+            <input type="text" id="wordInput" placeholder="z.B. DÜBEL">
+          </div>
+          <div class="field" style="flex: 0 0 100px;">
+            <label>Richtung</label>
+            <select id="directionInput">
+              <option value="horizontal">→ Horizontal</option>
+              <option value="vertical">↓ Vertikal</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label>Start X</label>
+            <input type="number" id="startXInput" value="1" min="1">
+          </div>
+          <div class="field">
+            <label>Start Y</label>
+            <input type="number" id="startYInput" value="1" min="1">
+          </div>
+        </div>
+        <div class="field">
+          <label>Beschreibung / Hinweis</label>
+          <textarea id="descriptionInput" placeholder="z.B. Befestigung in der Wand"></textarea>
+        </div>
+        <div class="actions">
+          <button class="btn-primary" onclick="addWord()">Wort hinzufügen</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>📝 Wörter-Liste <span style="font-weight: 400; font-size: 0.8rem; color: var(--text-muted);" id="wordCount">(0)</span></h2>
+      <div class="word-list" id="wordList">
+        <p class="hint-text">Noch keine Wörter hinzugefügt.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER: Grid -->
+  <div class="center-panel">
+    <div class="panel" style="width: 100%;">
+      <h2>🔲 Kreuzworträtsel-Gitter</h2>
+      <div id="modeIndicator" class="mode-indicator normal">
+        Normaler Modus – Füge Wörter hinzu
+      </div>
+      <div class="grid-container" style="margin-top: 12px;">
+        <div class="grid-wrapper">
+          <div class="grid-axis-x" id="axisX"></div>
+          <div class="grid-row-wrapper">
+            <div class="grid-axis-y" id="axisY"></div>
+            <div class="grid" id="grid"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top: 12px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <p class="hint-text" style="flex: 1;">
+          Klicke auf eine befüllte Zelle im <strong>Lösungswort-Modus</strong>, um sie zum Lösungswort hinzuzufügen.
+        </p>
+        <button class="btn-secondary btn-small" onclick="copyAllLetters()">🔤 Alle Buchstaben kopieren</button>
+      </div>
+    </div>
+
+    <div class="panel" style="width: 100%;">
+      <h2>📦 Export / Import</h2>
+      <div class="export-section">
+        <div class="row">
+          <div class="field">
+            <label>Puzzle-ID</label>
+            <input type="text" id="puzzleIdInput" placeholder="z.B. 1">
+          </div>
+        </div>
+        <div class="row">
+          <button class="btn-success" onclick="exportJSON()">💾 JSON exportieren</button>
+          <button class="btn-secondary" onclick="copyJSON()">📋 In Zwischenablage</button>
+        </div>
+        <hr class="divider">
+        <div class="import-section">
+          <label style="font-size: 0.8rem; color: var(--text-muted);">JSON importieren</label>
+          <textarea id="importArea" placeholder='JSON hier einfügen...'></textarea>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-secondary" onclick="importJSON()">📥 Aus Textfeld</button>
+            <button class="btn-secondary" onclick="document.getElementById('fileImport').click()">📂 Datei öffnen</button>
+            <input type="file" id="fileImport" accept=".json" style="display: none;" onchange="importFromFile(event)">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL: Solution Word -->
+  <div class="right-panel">
+    <div class="panel">
+      <h2>🌟 Lösungswort</h2>
+      <div>
+        <button id="solutionModeBtn" class="btn-secondary" onclick="toggleSolutionMode()" style="width: 100%; margin-bottom: 12px;">
+          🎯 Lösungswort-Modus aktivieren
+        </button>
+      </div>
+      <div id="solutionDisplay" class="solution-display empty">
+        Noch kein Lösungswort definiert
+      </div>
+      <div class="solution-letters" id="solutionLetters"></div>
+      <div style="margin-top: 12px;">
+        <button class="btn-danger" onclick="clearSolution()" style="width: 100%;">Lösungswort zurücksetzen</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>📖 Anleitung</h2>
+      <div class="hint-text" style="line-height: 1.8;">
+        <strong>1.</strong> Stelle die Gittergröße ein<br>
+        <strong>2.</strong> Füge Wörter mit Startposition, Richtung und Hinweis hinzu<br>
+        <strong>3.</strong> Aktiviere den <em>Lösungswort-Modus</em><br>
+        <strong>4.</strong> Klicke auf Zellen im Gitter, um das Lösungswort zusammenzusetzen<br>
+        <strong>5.</strong> Vergib eine Puzzle-ID und exportiere als JSON
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ============================================================
+  // STATE
+  // ============================================================
+  let gridCols = 12;
+  let gridRows = 12;
+  let words = []; // { word, direction, startX, startY, description }
+  let solutionLetters = []; // { x, y, letter }
+  let solutionMode = false;
+
+  // ============================================================
+  // GRID
+  // ============================================================
+  function buildGrid() {
+    const grid = document.getElementById('grid');
+    const axisX = document.getElementById('axisX');
+    const axisY = document.getElementById('axisY');
+    grid.innerHTML = '';
+    axisX.innerHTML = '';
+    axisY.innerHTML = '';
+    grid.style.gridTemplateColumns = `repeat(${gridCols}, 42px)`;
+    axisX.style.gridTemplateColumns = `repeat(${gridCols}, 42px)`;
+
+    // Render X axis labels
+    for (let x = 1; x <= gridCols; x++) {
+      const label = document.createElement('div');
+      label.className = 'axis-label';
+      label.textContent = x;
+      axisX.appendChild(label);
+    }
+
+    // Render Y axis labels
+    for (let y = 1; y <= gridRows; y++) {
+      const label = document.createElement('div');
+      label.className = 'axis-label';
+      label.textContent = y;
+      axisY.appendChild(label);
+    }
+
+    // Build letter map
+    const letterMap = buildLetterMap();
+    // Build number map
+    const numberMap = buildNumberMap();
+    // Build solution index map
+    const solutionMap = {};
+    solutionLetters.forEach((sl, i) => {
+      solutionMap[`${sl.x},${sl.y}`] = i + 1;
+    });
+
+    for (let y = 1; y <= gridRows; y++) {
+      for (let x = 1; x <= gridCols; x++) {
+        const cell = document.createElement('div');
+        cell.className = 'grid-cell';
+        cell.dataset.x = x;
+        cell.dataset.y = y;
+
+        const key = `${x},${y}`;
+        const letter = letterMap[key];
+
+        if (letter) {
+          cell.classList.add('filled');
+          cell.textContent = letter;
+
+          if (solutionMap[key]) {
+            cell.classList.add('solution-selected');
+            const orderBadge = document.createElement('span');
+            orderBadge.className = 'solution-order';
+            orderBadge.textContent = solutionMap[key];
+            cell.appendChild(orderBadge);
+          }
+
+          if (numberMap[key]) {
+            const numEl = document.createElement('span');
+            numEl.className = 'cell-number';
+            numEl.textContent = numberMap[key];
+            cell.appendChild(numEl);
+          }
+
+          cell.addEventListener('click', () => onCellClick(x, y, letter));
+        } else {
+          cell.classList.add('empty');
+        }
+
+        // Check conflicts
+        if (letter === '⚠') {
+          cell.classList.add('conflict-highlight');
+          cell.title = 'Buchstaben-Konflikt!';
+        }
+
+        grid.appendChild(cell);
+      }
+    }
+  }
+
+  function buildLetterMap() {
+    const map = {};
+    words.forEach(w => {
+      const letters = w.word.split('');
+      letters.forEach((ch, i) => {
+        const x = w.direction === 'horizontal' ? w.startX + i : w.startX;
+        const y = w.direction === 'vertical' ? w.startY + i : w.startY;
+        const key = `${x},${y}`;
+        if (map[key] && map[key].toLowerCase() !== ch.toLowerCase()) {
+          map[key] = '⚠'; // conflict
+        } else {
+          map[key] = ch;
+        }
+      });
+    });
+    return map;
+  }
+
+  function buildNumberMap() {
+    // Assign numbers to start cells (sorted by position: top-to-bottom, left-to-right)
+    const starts = [];
+    words.forEach(w => {
+      const key = `${w.startX},${w.startY}`;
+      if (!starts.find(s => s.key === key)) {
+        starts.push({ key, x: w.startX, y: w.startY });
+      }
+    });
+    starts.sort((a, b) => a.y - b.y || a.x - b.x);
+
+    const map = {};
+    starts.forEach((s, i) => {
+      map[s.key] = i + 1;
+    });
+    return map;
+  }
+
+  function resizeGrid() {
+    gridCols = parseInt(document.getElementById('gridCols').value, 10) || 12;
+    gridRows = parseInt(document.getElementById('gridRows').value, 10) || 12;
+    // Remove solution letters that are now out of bounds
+    solutionLetters = solutionLetters.filter(sl => sl.x <= gridCols && sl.y <= gridRows);
+    buildGrid();
+    updateSolutionDisplay();
+  }
+
+  // ============================================================
+  // WORDS
+  // ============================================================
+  function addWord() {
+    const wordRaw = document.getElementById('wordInput').value.trim();
+    const direction = document.getElementById('directionInput').value;
+    const startX = parseInt(document.getElementById('startXInput').value, 10);
+    const startY = parseInt(document.getElementById('startYInput').value, 10);
+    const description = document.getElementById('descriptionInput').value.trim();
+
+    if (!wordRaw) return showToast('Bitte ein Wort eingeben.', 'error');
+    if (!description) return showToast('Bitte eine Beschreibung eingeben.', 'error');
+    if (isNaN(startX) || isNaN(startY) || startX < 1 || startY < 1)
+      return showToast('Ungültige Startposition.', 'error');
+
+    const word = wordRaw;
+
+    // Check bounds
+    if (direction === 'horizontal' && startX + word.length - 1 > gridCols)
+      return showToast(`Wort passt nicht! Benötigte Spalten: ${startX} bis ${startX + word.length - 1}, aber Gitter hat nur ${gridCols}.`, 'error');
+    if (direction === 'vertical' && startY + word.length - 1 > gridRows)
+      return showToast(`Wort passt nicht! Benötigte Zeilen: ${startY} bis ${startY + word.length - 1}, aber Gitter hat nur ${gridRows}.`, 'error');
+
+    words.push({ word, direction, startX, startY, description });
+
+    // Clear form
+    document.getElementById('wordInput').value = '';
+    document.getElementById('descriptionInput').value = '';
+
+    buildGrid();
+    renderWordList();
+    showToast(`"${word}" hinzugefügt!`, 'success');
+  }
+
+  function removeWord(index) {
+    const removed = words.splice(index, 1)[0];
+    // Remove solution letters that belonged to cells that may no longer exist
+    const letterMap = buildLetterMap();
+    solutionLetters = solutionLetters.filter(sl => letterMap[`${sl.x},${sl.y}`]);
+    // Update solution letters with potentially new letters
+    solutionLetters.forEach(sl => {
+      sl.letter = letterMap[`${sl.x},${sl.y}`] || sl.letter;
+    });
+
+    buildGrid();
+    renderWordList();
+    updateSolutionDisplay();
+    showToast(`"${removed.word}" entfernt.`, 'info');
+  }
+
+  function renderWordList() {
+    const list = document.getElementById('wordList');
+    const count = document.getElementById('wordCount');
+    count.textContent = `(${words.length})`;
+
+    if (words.length === 0) {
+      list.innerHTML = '<p class="hint-text">Noch keine Wörter hinzugefügt.</p>';
+      return;
+    }
+
+    list.innerHTML = words.map((w, i) => `
+      <div class="word-item">
+        <div class="info">
+          <div>
+            <span class="direction-badge ${w.direction}">${w.direction === 'horizontal' ? '→' : '↓'}</span>
+            <span class="word-label">${escapeHtml(w.word)}</span>
+          </div>
+          <div class="word-meta">Start: (${w.startX}, ${w.startY}) · ${w.word.length} Buchstaben</div>
+          <div class="word-desc">${escapeHtml(w.description)}</div>
+        </div>
+        <div class="actions">
+          <button class="btn-danger" onclick="removeWord(${i})">✕</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ============================================================
+  // SOLUTION WORD
+  // ============================================================
+  function toggleSolutionMode() {
+    solutionMode = !solutionMode;
+    const btn = document.getElementById('solutionModeBtn');
+    const indicator = document.getElementById('modeIndicator');
+
+    if (solutionMode) {
+      btn.textContent = '🛑 Lösungswort-Modus beenden';
+      btn.className = 'btn-primary';
+      indicator.textContent = '🎯 Lösungswort-Modus – Klicke auf Zellen, um Buchstaben auszuwählen';
+      indicator.className = 'mode-indicator solution-mode';
+    } else {
+      btn.textContent = '🎯 Lösungswort-Modus aktivieren';
+      btn.className = 'btn-secondary';
+      indicator.textContent = 'Normaler Modus – Füge Wörter hinzu';
+      indicator.className = 'mode-indicator normal';
+    }
+  }
+
+  function onCellClick(x, y, letter) {
+    if (!solutionMode) {
+      // Normal mode: fill Start X / Start Y inputs
+      document.getElementById('startXInput').value = x;
+      document.getElementById('startYInput').value = y;
+      showToast(`Startposition (${x}, ${y}) übernommen`, 'info');
+      return;
+    }
+
+    // Check if already selected
+    const existingIndex = solutionLetters.findIndex(sl => sl.x === x && sl.y === y);
+    if (existingIndex !== -1) {
+      solutionLetters.splice(existingIndex, 1);
+    } else {
+      solutionLetters.push({ x, y, letter });
+    }
+
+    buildGrid();
+    updateSolutionDisplay();
+  }
+
+  function removeSolutionLetter(index) {
+    solutionLetters.splice(index, 1);
+    buildGrid();
+    updateSolutionDisplay();
+  }
+
+  function clearSolution() {
+    solutionLetters = [];
+    buildGrid();
+    updateSolutionDisplay();
+  }
+
+  function updateSolutionDisplay() {
+    const display = document.getElementById('solutionDisplay');
+    const list = document.getElementById('solutionLetters');
+
+    if (solutionLetters.length === 0) {
+      display.className = 'solution-display empty';
+      display.textContent = 'Noch kein Lösungswort definiert';
+      list.innerHTML = '';
+      return;
+    }
+
+    const word = solutionLetters.map(sl => sl.letter).join('');
+    display.className = 'solution-display';
+    display.textContent = word;
+
+    list.innerHTML = solutionLetters.map((sl, i) => {
+      const fromInfo = findWordForCell(sl.x, sl.y);
+      return `
+        <div class="solution-letter-item">
+          <span class="index">${i + 1}</span>
+          <span class="letter">${escapeHtml(sl.letter)}</span>
+          <span class="from-word">${fromInfo ? `${escapeHtml(fromInfo.word)} (Pos. ${fromInfo.letterPos})` : `(${sl.x}, ${sl.y})`}</span>
+          <span class="remove-btn" onclick="removeSolutionLetter(${i})" title="Entfernen">✕</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function findWordForCell(x, y) {
+    // Prefer horizontal match first
+    for (const w of words) {
+      if (w.direction === 'horizontal' && w.startY === y) {
+        const endX = w.startX + w.word.length - 1;
+        if (x >= w.startX && x <= endX) {
+          return { word: w.word, letterPos: x - w.startX + 1 };
+        }
+      }
+      if (w.direction === 'vertical' && w.startX === x) {
+        const endY = w.startY + w.word.length - 1;
+        if (y >= w.startY && y <= endY) {
+          return { word: w.word, letterPos: y - w.startY + 1 };
+        }
+      }
+    }
+    return null;
+  }
+
+  // ============================================================
+  // EXPORT / IMPORT
+  // ============================================================
+  function buildExportData() {
+    const id = document.getElementById('puzzleIdInput').value.trim();
+
+    const horizontal = words
+      .filter(w => w.direction === 'horizontal')
+      .map(w => ({
+        startPoint: { x: w.startX, y: w.startY },
+        word: w.word,
+        description: w.description
+      }));
+
+    const vertical = words
+      .filter(w => w.direction === 'vertical')
+      .map(w => ({
+        startPoint: { x: w.startX, y: w.startY },
+        word: w.word,
+        description: w.description
+      }));
+
+    const finalWord = {
+      word: solutionLetters.map(sl => sl.letter).join(''),
+      letters: solutionLetters.map(sl => {
+        const info = findWordForCell(sl.x, sl.y);
+        return info ? { word: info.word, letterPos: info.letterPos } : { word: '', letterPos: 0 };
+      })
+    };
+
+    const data = { horizontal, vertical, finalWord };
+    if (id) data.id = id;
+
+    return data;
+  }
+
+  function validate() {
+    const hWords = words.filter(w => w.direction === 'horizontal');
+    const vWords = words.filter(w => w.direction === 'vertical');
+
+    if (hWords.length < 1) {
+      showToast('Es muss mindestens ein horizontales Wort vorhanden sein.', 'error');
+      return false;
+    }
+    if (vWords.length < 1) {
+      showToast('Es muss mindestens ein vertikales Wort vorhanden sein.', 'error');
+      return false;
+    }
+    if (solutionLetters.length < 2) {
+      showToast('Das Lösungswort muss mindestens 2 Buchstaben haben.', 'error');
+      return false;
+    }
+
+    // Check for conflicts
+    const letterMap = buildLetterMap();
+    const hasConflict = Object.values(letterMap).some(v => v === '⚠');
+    if (hasConflict) {
+      showToast('Es gibt Buchstaben-Konflikte im Gitter! Bitte korrigieren.', 'error');
+      return false;
+    }
+
+    // Check duplicate coords in solution
+    const coords = solutionLetters.map(sl => `${sl.x},${sl.y}`);
+    if (new Set(coords).size !== coords.length) {
+      showToast('Doppelte Koordinaten im Lösungswort!', 'error');
+      return false;
+    }
+
+    // Check all solution letters have a valid word mapping
+    for (let i = 0; i < solutionLetters.length; i++) {
+      const info = findWordForCell(solutionLetters[i].x, solutionLetters[i].y);
+      if (!info) {
+        showToast(`Lösungsbuchstabe ${i + 1} gehört zu keinem Wort.`, 'error');
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  function exportJSON() {
+    if (!validate()) return;
+
+    const data = buildExportData();
+    const jsonStr = JSON.stringify(data, null, 2);
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `crossword_${data.id || 'puzzle'}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    showToast('JSON exportiert!', 'success');
+  }
+
+  function copyJSON() {
+    if (!validate()) return;
+
+    const data = buildExportData();
+    const jsonStr = JSON.stringify(data, null, 2);
+    navigator.clipboard.writeText(jsonStr).then(() => {
+      showToast('JSON in Zwischenablage kopiert!', 'success');
+    }).catch(() => {
+      showToast('Kopieren fehlgeschlagen.', 'error');
+    });
+  }
+
+  function importJSON() {
+    const raw = document.getElementById('importArea').value.trim();
+    if (!raw) return showToast('Bitte JSON einfügen.', 'error');
+
+    let data;
+    try {
+      data = JSON.parse(raw);
+    } catch (e) {
+      return showToast('Ungültiges JSON: ' + e.message, 'error');
+    }
+
+    // Reset state
+    words = [];
+    solutionLetters = [];
+
+    if (data.id) {
+      document.getElementById('puzzleIdInput').value = data.id;
+    }
+
+    // Import words
+    if (data.horizontal) {
+      data.horizontal.forEach(entry => {
+        words.push({
+          word: entry.word,
+          direction: 'horizontal',
+          startX: entry.startPoint.x,
+          startY: entry.startPoint.y,
+          description: entry.description || ''
+        });
+      });
+    }
+
+    if (data.vertical) {
+      data.vertical.forEach(entry => {
+        words.push({
+          word: entry.word,
+          direction: 'vertical',
+          startX: entry.startPoint.x,
+          startY: entry.startPoint.y,
+          description: entry.description || ''
+        });
+      });
+    }
+
+    // Auto-resize grid if needed
+    let maxX = 0, maxY = 0;
+    words.forEach(w => {
+      if (w.direction === 'horizontal') {
+        maxX = Math.max(maxX, w.startX + w.word.length - 1);
+        maxY = Math.max(maxY, w.startY);
+      } else {
+        maxX = Math.max(maxX, w.startX);
+        maxY = Math.max(maxY, w.startY + w.word.length - 1);
+      }
+    });
+    gridCols = maxX;
+    gridRows = maxY;
+    document.getElementById('gridCols').value = gridCols;
+    document.getElementById('gridRows').value = gridRows;
+
+    // Build letter map to reconstruct solution letters
+    const letterMap = buildLetterMap();
+
+    // Import solution word
+    if (data.finalWord && data.finalWord.letters) {
+      data.finalWord.letters.forEach(fl => {
+        // Find the cell position from word + letterPos
+        const allMatching = words.filter(w => w.word === fl.word);
+        for (const w of allMatching) {
+          const pos = fl.letterPos - 1; // Convert 1-based to 0-based
+          let x, y;
+          if (w.direction === 'horizontal') {
+            x = w.startX + pos;
+            y = w.startY;
+          } else {
+            x = w.startX;
+            y = w.startY + pos;
+          }
+          const key = `${x},${y}`;
+          if (letterMap[key]) {
+            solutionLetters.push({ x, y, letter: letterMap[key] });
+            break;
+          }
+        }
+      });
+    }
+
+    buildGrid();
+    renderWordList();
+    updateSolutionDisplay();
+    document.getElementById('importArea').value = '';
+    showToast('JSON erfolgreich importiert!', 'success');
+  }
+
+  function importFromFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const content = e.target.result;
+      document.getElementById('importArea').value = content;
+      importJSON();
+    };
+    reader.readAsText(file);
+  }
+
+  // ============================================================
+  // COPY ALL LETTERS
+  // ============================================================
+  function copyAllLetters() {
+    const letterMap = buildLetterMap();
+    const allLetters = Object.values(letterMap).filter(l => l !== '⚠');
+    if (allLetters.length === 0) {
+      return showToast('Keine Buchstaben im Gitter vorhanden.', 'error');
+    }
+    const sorted = allLetters.map(l => l.toUpperCase()).sort().join('');
+    const unique = [...new Set(sorted)].join('');
+    navigator.clipboard.writeText(sorted).then(() => {
+      showToast(`${sorted.length} Buchstaben kopiert (${unique.length} verschiedene)`, 'success');
+    }).catch(() => {
+      showToast('Kopieren fehlgeschlagen.', 'error');
+    });
+  }
+
+  // ============================================================
+  // UTILS
+  // ============================================================
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  function showToast(message, type = 'info') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = `toast ${type} show`;
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(() => {
+      toast.classList.remove('show');
+    }, 3000);
+  }
+
+  // Keyboard shortcut: Enter in word input to add
+  document.getElementById('wordInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addWord();
+    }
+  });
+
+  // ============================================================
+  // INIT
+  // ============================================================
+  buildGrid();
+</script>
+
+</body>
+</html>
+

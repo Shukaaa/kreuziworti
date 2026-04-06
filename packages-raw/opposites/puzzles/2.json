@@ -1,0 +1,172 @@
+{
+  "horizontal": [
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 1
+      },
+      "word": "geräuschlos",
+      "description": "Lautstark"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 3
+      },
+      "word": "eisig",
+      "description": "Warm"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 5
+      },
+      "word": "zügig",
+      "description": "Langsam"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 7
+      },
+      "word": "extern",
+      "description": "Intern"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 9
+      },
+      "word": "tönend",
+      "description": "Lautlos"
+    },
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 11
+      },
+      "word": "gegenseitig",
+      "description": "Einseitig"
+    },
+    {
+      "startPoint": {
+        "x": 7,
+        "y": 3
+      },
+      "word": "weich",
+      "description": "Hart"
+    },
+    {
+      "startPoint": {
+        "x": 7,
+        "y": 5
+      },
+      "word": "erste",
+      "description": "Zweite"
+    },
+    {
+      "startPoint": {
+        "x": 8,
+        "y": 7
+      },
+      "word": "high",
+      "description": "Nüchtern"
+    },
+    {
+      "startPoint": {
+        "x": 8,
+        "y": 9
+      },
+      "word": "leer",
+      "description": "Voll"
+    }
+  ],
+  "vertical": [
+    {
+      "startPoint": {
+        "x": 1,
+        "y": 1
+      },
+      "word": "grenzwertig",
+      "description": "unproblematisch"
+    },
+    {
+      "startPoint": {
+        "x": 5,
+        "y": 3
+      },
+      "word": "gegoren",
+      "description": "Unausgereift"
+    },
+    {
+      "startPoint": {
+        "x": 11,
+        "y": 1
+      },
+      "word": "schwerhörig",
+      "description": "Hellhörig"
+    },
+    {
+      "startPoint": {
+        "x": 3,
+        "y": 7
+      },
+      "word": "tonig",
+      "description": "sandig"
+    },
+    {
+      "startPoint": {
+        "x": 3,
+        "y": 1
+      },
+      "word": "rosig",
+      "description": "Düster"
+    }
+  ],
+  "finalWord": {
+    "word": "chinesisch",
+    "letters": [
+      {
+        "word": "geräuschlos",
+        "letterPos": 7
+      },
+      {
+        "word": "high",
+        "letterPos": 4
+      },
+      {
+        "word": "eisig",
+        "letterPos": 2
+      },
+      {
+        "word": "tönend",
+        "letterPos": 5
+      },
+      {
+        "word": "extern",
+        "letterPos": 1
+      },
+      {
+        "word": "erste",
+        "letterPos": 3
+      },
+      {
+        "word": "weich",
+        "letterPos": 3
+      },
+      {
+        "word": "gegenseitig",
+        "letterPos": 6
+      },
+      {
+        "word": "schwerhörig",
+        "letterPos": 2
+      },
+      {
+        "word": "high",
+        "letterPos": 1
+      }
+    ]
+  },
+  "id": "2"
+}

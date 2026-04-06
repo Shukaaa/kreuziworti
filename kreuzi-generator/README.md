@@ -1,14 +1,31 @@
 # kreuzi-generator
 
-Ein Script für die HTML-Webseite von (Crossword Puzzle Maker)[https://crosswords.brightsprout.com/crossword-puzzle-maker] verwendet, um daraus ein Kreuzworträtsel in unserem JSON Format zu generieren.
+Ein eigenständiger Kreuzworträtsel-Editor zum Erstellen von Rätseln im kreuziworti-JSON-Format.
 
-## Erstellung eines Kreuzworträtsels
+## Nutzung
 
-1. Gehe auf die Webseite von (Crossword Puzzle Maker)[https://crosswords.brightsprout.com/crossword-puzzle-maker]
-2. Erstelle ein Kreuzworträtsel und gebe bei allen Wörtern die Lösung ein
-3. Öffne die Entwicklertools und gehe in die Konsole
-4. Paste den JavaScript Code aus der `script.js` in die Konsole
-5. Es wird ein neues Formular generiert, wo du ein Lösungswort definieren musst
-6. Nachdem du alle Schritte abgeschlossen hast, klicke auf "Export JSON"
-7. Anschließend wurde der Download gestartet und die JSON Config wurde generiert
-8. Am Ende fügst du die JSON Datei in den `packages-raw` Ordner hinzu und added eine "id" Eigenschaft mit einem eindeutigen Namen
+1. Öffne die `index.html` im Browser
+2. Stelle die Gittergröße ein (Spalten × Zeilen)
+3. Füge Wörter hinzu:
+   - Wort eingeben
+   - Richtung wählen (horizontal / vertikal)
+   - Startposition (X, Y) angeben
+   - Beschreibung / Hinweis eingeben
+4. Aktiviere den **Lösungswort-Modus** (rechts)
+5. Klicke auf Zellen im Gitter, um das Lösungswort zusammenzusetzen
+6. Vergib eine Puzzle-ID und klicke auf **JSON exportieren**
+7. Füge die JSON-Datei in den `packages-raw` Ordner hinzu
+
+## Features
+
+- 🔲 Interaktives Gitter mit Live-Vorschau
+- ➕ Wörter hinzufügen / entfernen
+- 🌟 Lösungswort per Klick zusammenstellen
+- ⚠️ Automatische Konflikterkennung bei überlappenden Buchstaben
+- 💾 JSON-Export & Import
+- 📋 In Zwischenablage kopieren
+- 📥 Bestehende Rätsel importieren und bearbeiten
+
+## Legacy
+
+Das alte `script.js` war für die Nutzung auf [Crossword Puzzle Maker](https://crosswords.brightsprout.com/crossword-puzzle-maker) gedacht. Die `index.html` ersetzt diesen Workflow durch eine eigenständige Lösung.
